@@ -60,3 +60,6 @@ de indivíduos.
 ---
 
 Sinta-se à vontade para personalizar os emojis de acordo com o estilo e a temática do seu projeto!
+
+
+Gabriel Oliveira Almeida Silva
