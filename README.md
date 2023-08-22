@@ -1,4 +1,4 @@
-# Título do Repositório 💻
+. # Título do Repositório 💻
 
 Descrição curta e informativa do que é o projeto e qual é o seu propósito.
 
@@ -37,21 +37,21 @@ fluxos de trabalho
 
 Descrição do nosso workflow:
 
-1 - Abra uma issue nova descrevendo o que será feito
+1. Abra uma issue nova descrevendo o que será feito
 
-2 - Crie uma branch nova a partir da develop
+2. Crie uma branch nova a partir da develop
 
-3 - Desenvolva a feature
+3. Desenvolva a feature
 
-4 - Abra um pull request para a develop
+4. Abra um pull request para a develop
 
-4.1 - Se necessário realize rebase e resolva os conflitos
+    4.1. Se necessário realize rebase e resolva os conflitos
 
-5 - Revise as alterações
+5. Revise as alterações
 
-6 - Integra a branch nova na develop
+6. Integra a branch nova na develop
 
-7 - Feche a issue referenciando o pull request
+7. Feche a issue referenciando o pull request
 
 ## Licença 📜
 
