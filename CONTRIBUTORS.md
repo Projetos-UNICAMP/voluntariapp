@@ -1,5 +1,5 @@
 1 - Felipe Lamim de Almeida Santos  (RA247087)
 2 - Gabriel Oliveira Almeida Silva (RA256397)
-3 - Nome do Fulano  (RAXXXXX)
+3 - Gabriel Tadeu Gonzaga Diniz  (RA247119)
 4 - Nome do Fulano  (RAXXXXX)
 5 - Nome do Fulano  (RAXXXXX)
