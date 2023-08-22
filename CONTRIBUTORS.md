@@ -1,5 +1,5 @@
-1 - Gabriel Oliveira Almeida Silva (RA256397)
-2 - Nome do Fulano  (RAXXXXX)
+1 - Felipe Lamim de Almeida Santos  (RA247087)
+2 - Gabriel Oliveira Almeida Silva (RA256397)
 3 - Nome do Fulano  (RAXXXXX)
 4 - Nome do Fulano  (RAXXXXX)
 5 - Nome do Fulano  (RAXXXXX)
