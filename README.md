@@ -1,80 +1,27 @@
-. # Título do Repositório 💻
+# React + TypeScript + Vite
 
-Descrição curta e informativa do que é o projeto e qual é o seu propósito.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Organizador-operacao-natal
+Currently, two official plugins are available:
 
-## Visão Geral 📄
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Uma breve visão geral do projeto, seus principais objetivos e funcionalidades.
+## Expanding the ESLint configuration
 
-## Capturas de Tela 📷
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-Se o projeto tiver uma interface gráfica ou aspectos visuais importantes, você pode adicionar algumas capturas de
-tela aqui para dar aos visitantes uma ideia visual do que esperar.
+- Configure the top-level `parserOptions` property like this:
 
-## Instalação 🛠️
-
-Instruções passo a passo sobre como instalar e configurar o projeto. Certifique-se de incluir requisitos de sistema,
-dependências e qualquer outro detalhe importante para que os usuários possam configurar o ambiente facilmente.
-
-```bash
-comando para clonar o repositório
-comandos para instalar dependências
-outros comandos de configuração
+```js
+   parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+   },
 ```
 
-## Uso 🚀
-
-Demonstre como usar o projeto após a instalação. Forneça exemplos de comandos, trechos de código ou fluxos de
-trabalho. Quanto mais claro e conciso, melhor.
-
-```bash
-comandos de linha de comando
-exemplos de código
-fluxos de trabalho
-```
-
-## Contribuição 🤝
-
-Descrição do nosso workflow:
-
-1. Abra uma issue nova descrevendo o que será feito
-
-2. Crie uma branch nova a partir da develop
-
-3. Desenvolva a feature
-
-4. Abra um pull request para a develop
-
-    4.1. Se necessário realize rebase e resolva os conflitos
-
-5. Revise as alterações
-
-6. Integra a branch nova na develop
-
-7. Feche a issue referenciando o pull request
-
-## Licença 📜
-
-Indique sob qual licença o seu projeto está disponibilizado. Por exemplo:
-
-Este projeto é licenciado sob a [Nome da Licença](URL da Licença).
-
-## Contato 📬
-
-Fornecer informações de contato, como um endereço de e-mail ou links para perfis de redes sociais, para que os
-usuários possam entrar em contato em caso de perguntas, problemas ou feedback.
-
-## Agradecimentos 🙏
-
-Aqui é um espaço para agradecer às pessoas ou projetos que foram especialmente úteis para o desenvolvimento deste
-projeto. Isso pode incluir reconhecimentos a bibliotecas de terceiros, recursos online ou contribuições específicas
-de indivíduos.
-
----
-
-Sinta-se à vontade para personalizar os emojis de acordo com o estilo e a temática do seu projeto!
-
-
-Gabriel Oliveira Almeida Silva 256397
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
