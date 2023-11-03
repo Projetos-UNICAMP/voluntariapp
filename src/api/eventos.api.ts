@@ -24,7 +24,7 @@ export interface IEventoApi {
   buscarEventoPorCodigo: (codigo: string) => Promise<DadosEvento>;
 }
 
-export const EventoAPI: IEventoApi = {
+export const EventoAPIMock: IEventoApi = {
   criarNovoEvento: function (
     payload: PayloadNovoEvento
   ): Promise<RespostaNovoEvento> {
