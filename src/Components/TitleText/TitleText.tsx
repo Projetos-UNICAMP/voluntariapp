@@ -1,18 +1,19 @@
 // TitleText.tsx
 import React from 'react';
-import { Text as ChakraText } from '@chakra-ui/react';
+import { Text as ChakraText, StyleProps } from '@chakra-ui/react';
 
-export interface TitleTextProps {
+export interface TitleTextProps extends StyleProps {
   value: string;
 }
 
-const TitleText: React.FC<TitleTextProps> = ({ value }) => {
+const TitleText: React.FC<TitleTextProps> = ({ value, ...styleProps }) => {
   return (
     <ChakraText
       className="main-title"
       fontSize="6xl"
       fontWeight="black"
-      marginBottom="1rem">
+      lineHeight={1}
+      {...styleProps}>
       {value}
     </ChakraText>
   );

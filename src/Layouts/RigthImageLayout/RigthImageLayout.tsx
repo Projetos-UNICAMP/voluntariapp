@@ -1,6 +1,6 @@
 // RightImageLayoutComponent.tsx
 import React from 'react';
-import { Box, Image, Flex } from '@chakra-ui/react';
+import { Box, Image, Flex, Center } from '@chakra-ui/react';
 
 export interface RightImageLayoutComponentProps {
   children: React.ReactNode;
@@ -14,7 +14,9 @@ const RightImageLayoutComponent: React.FC<RightImageLayoutComponentProps> = ({
   return (
     <Flex flexDir={'column'} w={'100vw'}>
       <Flex direction="row" w={'100%'} h="100vh">
-        <Box flex="63%">{children}</Box>
+        <Center>
+          <Box flex="63%">{children}</Box>
+        </Center>
         <Box flex="47%">
           <Image
             src={imageUrl}

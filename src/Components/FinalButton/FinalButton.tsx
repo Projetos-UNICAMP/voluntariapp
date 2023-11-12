@@ -1,32 +1,45 @@
 // src/components/FinalButton/FinalButton.tsx
-import { Button, ButtonProps } from '@chakra-ui/react';
-import React from 'react';
+import { Button, ButtonProps, StyleProps } from '@chakra-ui/react';
 
 export enum ButtonStyleOptions {
   Primary = 'primary',
   Secondary = 'secondary',
 }
 
+export interface ButtonStyleProps extends StyleProps {
+  type: ButtonStyleOptions;
+}
+
 export type Props = {
   label: string;
-  style: ButtonStyleOptions;
+  style: ButtonStyleProps;
   onClick: () => void;
 };
 
-export default function FinalButton({ label, style = ButtonStyleOptions.Primary, onClick }: Props) {
+export default function FinalButton({
+  label,
+  style = { type: ButtonStyleOptions.Primary },
+  onClick,
+}: Props) {
   const primaryProps: ButtonProps = {
-    colorScheme: 'linkedin',
-  }
-  
-  const secondaryProps: ButtonProps = {
-    colorScheme: 'pink',
-  }
+    colorScheme: 'teal',
+  };
 
-  const buttonProps: ButtonProps = style === ButtonStyleOptions.Primary ? primaryProps : secondaryProps;
+  const secondaryProps: ButtonProps = {
+    color: 'white',
+    backgroundColor: 'pink.200',
+  };
+
+  const buttonProps: ButtonProps =
+    style.type === ButtonStyleOptions.Primary ? primaryProps : secondaryProps;
+
+  const { type, ...buttonStyle } = style;
 
   return (
     <div>
-      <Button {...buttonProps} onClick={onClick}>{label}</Button>
+      <Button {...buttonProps} {...buttonStyle} onClick={onClick}>
+        {label}
+      </Button>
     </div>
   );
 }

@@ -10,28 +10,43 @@ import FinalButton, {
 const LandingPage = () => {
   return (
     <RightImageLayoutComponent imageUrl={'src/assets/pens.png'}>
-      <Flex flexDir={'column'}>
-        <AppLogo size={LogoSize.Large}></AppLogo>
-        <TitleText
-          value={
-            'Conectando voluntários e causas para transformar vidas.'
-          }></TitleText>
-        <SimpleText
-          value={
-            'Seja parte de uma comunidade que faz a diferença! Com o VoluntariApp, você pode criar um evento voluntário ou participar de um evento já existente '
-          }></SimpleText>
-        <FinalButton
-          label={'criar evento'}
-          style={ButtonStyleOptions.Primary}
-          onClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}></FinalButton>
-        <FinalButton
-          label={'entrar com código de evento'}
-          style={ButtonStyleOptions.Primary}
-          onClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}></FinalButton>
+      <Flex flexDir={'column'} verticalAlign={'middle'}>
+        <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>
+          <AppLogo size={LogoSize.Large}></AppLogo>
+          <TitleText value={'Conectando'} mt={10}></TitleText>
+          <TitleText value="voluntários e causas"></TitleText>
+          <TitleText value="para transformar vidas."></TitleText>
+          <Flex flexDir={'column'} alignSelf={'center'} mt={6}>
+            <SimpleText
+              value={
+                'Seja parte de uma comunidade que faz a diferença! Com o VoluntariApp, você pode criar um evento voluntário ou participar de um evento já existente '
+              }></SimpleText>
+          </Flex>
+        </Flex>
+        <Flex flexDir={'column'} width={'100%'} textAlign={'center'}>
+          <FinalButton
+            label={'criar evento'}
+            style={{
+              type: ButtonStyleOptions.Primary,
+              width: '20vw',
+              mt: 14,
+              mb: 4,
+            }}
+            onClick={function (): void {
+              throw new Error('Function not implemented.');
+            }}></FinalButton>
+          <FinalButton
+            label={'entrar com código de evento'}
+            style={{
+              type: ButtonStyleOptions.Secondary,
+              width: '20vw',
+              mt: 4,
+              mb: 4,
+            }}
+            onClick={function (): void {
+              throw new Error('Function not implemented.');
+            }}></FinalButton>
+        </Flex>
       </Flex>
     </RightImageLayoutComponent>
   );
