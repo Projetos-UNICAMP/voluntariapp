@@ -37,6 +37,7 @@ const theme = extendTheme({ colors });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <RouterProvider router={browserRouter} />
     <ChakraProvider theme={theme}>
       <RouterProvider router={browserRouter} />
     </ChakraProvider>
