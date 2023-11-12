@@ -6,8 +6,10 @@ import SimpleText from '../Components/SimpleText/SimpleText';
 import FinalButton, {
   ButtonStyleOptions,
 } from '../Components/FinalButton/FinalButton';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   return (
     <RightImageLayoutComponent imageUrl={'src/assets/pens.png'}>
       <Flex flexDir={'column'} verticalAlign={'middle'}>
@@ -32,9 +34,7 @@ const LandingPage = () => {
               mt: 14,
               mb: 4,
             }}
-            onClick={function (): void {
-              throw new Error('Function not implemented.');
-            }}></FinalButton>
+            onClick={() => navigate('/criar-evento')}></FinalButton>
           <FinalButton
             label={'entrar com código de evento'}
             style={{
