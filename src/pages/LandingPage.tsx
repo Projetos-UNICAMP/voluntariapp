@@ -6,10 +6,12 @@ import SimpleText from '../Components/SimpleText/SimpleText';
 import FinalButton, {
   ButtonStyleOptions,
 } from '../Components/FinalButton/FinalButton';
+import TopMenu from '../Components/TopMenu/TopMenu';
 
 const LandingPage = () => {
   return (
     <RightImageLayoutComponent imageUrl={'src/assets/pens.png'}>
+      <TopMenu></TopMenu>
       <Flex flexDir={'column'} verticalAlign={'middle'}>
         <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>
           <AppLogo size={LogoSize.Large}></AppLogo>
