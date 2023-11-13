@@ -2,16 +2,34 @@ import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 import { extendTheme } from '@chakra-ui/react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
 import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import { browserRouter } from './routes/routes.tsx';
 
 const colors = {
-  brand: {
-    900: '#1a365d',
-    800: '#153e75',
-    700: '#2a69ac',
+  teal: {
+    '50': '#EEF7F7',
+    '100': '#CEE8E8',
+    '200': '#AFD9DA',
+    '300': '#8FCBCC',
+    '400': '#70BCBD',
+    '500': '#50ADAF',
+    '600': '#408A8C',
+    '700': '#306869',
+    '800': '#204546',
+    '900': '#102323',
+  },
+  pink: {
+    '50': '#FEE6EA',
+    '100': '#FCBAC3',
+    '200': '#FB8E9D',
+    '300': '#F96277',
+    '400': '#F73651',
+    '500': '#F6092A',
+    '600': '#C40822',
+    '700': '#930619',
+    '800': '#620411',
+    '900': '#310208',
   },
 };
 
@@ -19,9 +37,8 @@ const theme = extendTheme({ colors });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={browserRouter} />
     <ChakraProvider theme={theme}>
-      <App />
+      <RouterProvider router={browserRouter} />
     </ChakraProvider>
   </React.StrictMode>
 );
