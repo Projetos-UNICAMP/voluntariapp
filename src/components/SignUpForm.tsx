@@ -25,7 +25,7 @@ const SignUpForm: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Aqui você pode adicionar a lógica para enviar os dados para um servidor, por exemplo
+    //adicionar a lógica para enviar os dados para um servidor, por exemplo
     console.log(user);
   };
 
