@@ -1,14 +1,14 @@
 // TopMenu.tsx
 import React from 'react';
-import {Flex} from '@chakra-ui/react';
+import {Flex, StyleProps} from '@chakra-ui/react';
 import AppLogo, { LogoSize } from '../AppLogo/AppLogo';
 import SimpleText from '../SimpleText/SimpleText';
 
-export interface TopMenuProps {
+export interface TopMenuProps extends StyleProps{
 }
 
-const TopMenu: React.FC<TopMenuProps> = () => {
-    return <Flex flexDir='line' textAlign='center'>
+const TopMenu: React.FC<TopMenuProps> = ({...styleProps}) => {
+    return <Flex flexDir='line' textAlign='center' {...styleProps}>
         <Flex ml="0.6vw" mr="1vw">
             <AppLogo size={LogoSize.Small}></AppLogo>
         </Flex>

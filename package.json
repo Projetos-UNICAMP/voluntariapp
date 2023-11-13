@@ -20,6 +20,7 @@
     "firebase": "^10.5.2",
     "@fontsource/open-sans": "^5.0.17",
     "@fontsource/raleway": "^5.0.15",
+    "@fontsource/work-sans": "^5.0.15",
     "framer-motion": "^10.16.4",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",

@@ -11,7 +11,7 @@ import TopMenu from '../Components/TopMenu/TopMenu';
 const LandingPage = () => {
   return (
     <RightImageLayoutComponent imageUrl={'src/assets/pens.png'}>
-      <TopMenu></TopMenu>
+      <TopMenu position="absolute" top="2vh"></TopMenu>
       <Flex flexDir={'column'} verticalAlign={'middle'}>
         <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>
           <AppLogo size={LogoSize.Large}></AppLogo>
