@@ -8,7 +8,8 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  Button
+  Button,
+  Input,
 } from '@chakra-ui/react';
 import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLayout';
 import AppLogo, { LogoSize } from '../Components/AppLogo/AppLogo';
@@ -21,8 +22,13 @@ import TopMenu from '../Components/TopMenu/TopMenu';
 import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
-  const {isOpen, onOpen, onClose} = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
+  let eventCode: string = '';
+  function updateCode(newCode: string) {
+    eventCode = newCode;
+    return;
+  }
   return (
     <RightImageLayoutComponent imageUrl={'src/assets/pens.png'}>
       <TopMenu position="absolute" top="2vh"></TopMenu>
@@ -48,7 +54,9 @@ const LandingPage = () => {
               mt: 14,
               mb: 4,
             }}
-            onClick={onOpen}></FinalButton>
+            onClick={function (): void {
+              throw new Error('Function not implemented.');
+            }}></FinalButton>
           <FinalButton
             label={'entrar com código de evento'}
             style={{
@@ -57,9 +65,7 @@ const LandingPage = () => {
               mt: 4,
               mb: 4,
             }}
-            onClick={function (): void {
-              throw new Error('Function not implemented.');
-            }}></FinalButton>
+            onClick={onOpen}></FinalButton>
           <FinalButton
             label={'event info'}
             style={{
@@ -76,17 +82,26 @@ const LandingPage = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Entre com o código do evento</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            asdasdadasdadasdadas
+            <Input
+              placeholder="Código"
+              onChange={(e) => updateCode(e.target.value)}></Input>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
+            <Button
+              colorScheme="green"
+              mr={3}
+              onClick={() => {
+                navigate('/event-info');
+              }}>
+              Confirmar
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
+            <Button colorScheme="red" mr={3} onClick={onClose}>
+              Fechar
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
