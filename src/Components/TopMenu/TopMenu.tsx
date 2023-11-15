@@ -11,17 +11,17 @@ const TopMenu: React.FC<TopMenuProps> = ({ ...styleProps }) => {
   const navigate = useNavigate();
   return (
     <Flex flexDir="line" textAlign="center" {...styleProps}>
-      <Flex ml="0.6vw" mr="1vw" onClick={() => navigate('/')}>
+      <Flex ml="0.6vw" mr="1vw" onClick={() => navigate('/')} style={{cursor: 'pointer'}}>
         <AppLogo size={LogoSize.Small}></AppLogo>
       </Flex>
-      <Flex mr="1vw">
+      <Flex mr="1vw" style={{cursor: 'pointer'}}>
         <SimpleText
           value={'Página Inicial'}
           fontWeight="bold"
           fontSize="1vw"
           onClick={() => navigate('/paginal-inicial')}></SimpleText>
       </Flex>
-      <Flex mr="1vw">
+      <Flex mr="1vw" style={{cursor: 'pointer'}}>
         <SimpleText
           value={'Login'}
           fontWeight="bold"
