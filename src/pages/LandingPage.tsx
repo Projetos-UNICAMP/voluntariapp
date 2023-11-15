@@ -54,7 +54,9 @@ const LandingPage = () => {
               mt: 14,
               mb: 4,
             }}
-            onClick={onOpen}></FinalButton>
+            onClick={function (): void {
+              throw new Error('Function not implemented.');
+            }}></FinalButton>
           <FinalButton
             label={'entrar com código de evento'}
             style={{
