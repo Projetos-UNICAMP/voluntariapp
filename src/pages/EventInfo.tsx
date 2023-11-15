@@ -1,4 +1,4 @@
-import { Flex, Image, Text, Spacer } from '@chakra-ui/react';
+import { Flex, Image, Text, Box, Spacer } from '@chakra-ui/react';
 import TopMenu from '../Components/TopMenu/TopMenu';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
