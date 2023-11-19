@@ -24,7 +24,7 @@ import { useNavigate } from 'react-router-dom';
 const LandingPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-  let eventCode: string = '';
+  let eventCode: string;
   function updateCode(newCode: string) {
     eventCode = newCode;
     return;
