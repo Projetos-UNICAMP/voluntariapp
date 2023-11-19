@@ -52,24 +52,32 @@ const SignUpPage = () => {
               name="nome"
               onChange={handleChange}></FinalTextInputField>
           </Flex>
+          <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
           <FinalTextInputField
             placeholder="Email:"
             value={user.email}
             name="email"
             onChange={handleChange}></FinalTextInputField>
+            </Flex>
+            <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
           <FinalTextInputField
             placeholder="Telefone:"
             value={user.telefone}
             name="telefone"
             onChange={handleChange}></FinalTextInputField>
+            </Flex>
+            <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
           <FinalTextInputField
             placeholder="Senha:"
             value={user.senha}
             name="senha"
             onChange={handleChange}></FinalTextInputField>
+            </Flex>
+            <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
           <FinalDropdown
             label="Como você pode ajudar?"
             options={options}></FinalDropdown>
+        </Flex>
         </Flex>
         <Flex flexDir={'column'} width={'100%'} textAlign={'center'}>
           <FinalButton
