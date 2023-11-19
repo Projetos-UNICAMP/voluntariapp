@@ -26,8 +26,10 @@ export const UsuarioAPIMock: IUsuarioAPI = {
   cadastrarNovoUsuario: function (
     payload: PayloadNovoUsuario
   ): Promise<boolean> {
-    console.log(payload);
-    return new Promise<boolean>(() => setTimeout(() => true, 500));
+    console.log('Simulando comportamento de salvar: ' + payload);
+    return new Promise<boolean>((resolve) =>
+      setTimeout(() => resolve(true), 500)
+    );
   },
   loginComEmailESenha: function (
     email: string,
