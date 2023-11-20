@@ -66,17 +66,6 @@ const LandingPage = () => {
               mb: 4,
             }}
             onClick={onOpen}></FinalButton>
-          <FinalButton
-            label={'event info'}
-            style={{
-              type: ButtonStyleOptions.Secondary,
-              width: '20vw',
-              mt: 4,
-              mb: 4,
-            }}
-            onClick={() => {
-              navigate('/event-info');
-            }}></FinalButton>
         </Flex>
       </Flex>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -92,14 +81,18 @@ const LandingPage = () => {
 
           <ModalFooter>
             <Button
-              colorScheme="green"
+              colorScheme='teal'
               mr={3}
               onClick={() => {
-                navigate('/event-info');
+                navigate('/event-info', { state: { eventCode } });
               }}>
               Confirmar
             </Button>
-            <Button colorScheme="red" mr={3} onClick={onClose}>
+            <Button
+              backgroundColor="pink.200"
+              color="white"
+              mr={3}
+              onClick={onClose}>
               Fechar
             </Button>
           </ModalFooter>
