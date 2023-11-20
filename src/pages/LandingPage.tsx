@@ -20,15 +20,12 @@ import FinalButton, {
 } from '../Components/FinalButton/FinalButton';
 import TopMenu from '../Components/TopMenu/TopMenu';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const LandingPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-  let eventCode: string;
-  function updateCode(newCode: string) {
-    eventCode = newCode;
-    return;
-  }
+  const [eventCode, setEventCode] = useState<string>('');
   return (
     <RightImageLayoutComponent imageUrl={'src/assets/pens.png'}>
       <TopMenu position="absolute" top="2vh"></TopMenu>
@@ -76,12 +73,12 @@ const LandingPage = () => {
           <ModalBody>
             <Input
               placeholder="Código"
-              onChange={(e) => updateCode(e.target.value)}></Input>
+              onChange={(e) => setEventCode(e.target.value)}></Input>
           </ModalBody>
 
           <ModalFooter>
             <Button
-              colorScheme='teal'
+              colorScheme="teal"
               mr={3}
               onClick={() => {
                 navigate('/event-info', { state: { eventCode } });

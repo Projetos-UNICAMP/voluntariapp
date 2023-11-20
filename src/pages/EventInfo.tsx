@@ -1,4 +1,4 @@
-import { Flex, Image, Text, Box, Spacer } from '@chakra-ui/react';
+import { Flex, Image, Text, Spacer, Spinner, Center } from '@chakra-ui/react';
 import TopMenu from '../Components/TopMenu/TopMenu';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -12,12 +12,13 @@ const EventInfo = () => {
   const eventCode = location.state;
   console.log(eventCode);
   const [state, setState] = useState('');
-  const [eventData, setEventData] = useState<DadosEvento | undefined>(undefined);
+  const [eventData, setEventData] = useState<DadosEvento | undefined>(
+    undefined
+  );
   const [error, setError] = useState(false);
   useEffect(() => {
     setState('loading');
-    EventoAPIMock
-      .buscarEventoPorCodigo(eventCode)
+    EventoAPIMock.buscarEventoPorCodigo(eventCode)
       .then((res) => {
         setEventData(res);
         setState('success');
@@ -26,7 +27,7 @@ const EventInfo = () => {
         setState('error');
         setError(err);
       });
-  }, []);
+  }, [eventCode]);
   if (state == 'success')
     return (
       <Flex flexDir="column" w="100vw" h="100vh">
@@ -69,20 +70,36 @@ const EventInfo = () => {
         </Flex>
       </Flex>
     );
-
-  return (
-    <Flex flexDir="column" w="100vw" h="100vh">
-      <TopMenu mt="2vh"></TopMenu>
-      <Flex flexDir='column' ml='30' mt="100">
-        <Text fontSize='40' fontWeight='bold' lineHeight={1.1}>Tivemos um problema</Text>
-        <Text fontSize='40' fontWeight='bold' lineHeight={1.1}>ao buscar os dados do evento:</Text>
-        <Text mt="10" fontSize={24}>{error.toString()}</Text>
-      </Flex>
-      <Spacer></Spacer>
+  if (state == 'loading')
+    return (
+      <Flex flexDir="column" w="100vw" h="100vh">
+        <TopMenu mt="2vh"></TopMenu>
+        <Spinner height={200} width={200} alignSelf={"center"} mt="25vh" borderWidth={5}></Spinner>
+        <Spacer></Spacer>
         <Flex w={'90vw'}>
           <Image src="src/assets/blob.png"></Image>
         </Flex>
+      </Flex>
+    );
+  return (
+    <Flex flexDir="column" w="100vw" h="100vh">
+      <TopMenu mt="2vh"></TopMenu>
+      <Flex flexDir="column" ml="30" mt="100">
+        <Text fontSize="40" fontWeight="bold" lineHeight={1.1}>
+          Tivemos um problema
+        </Text>
+        <Text fontSize="40" fontWeight="bold" lineHeight={1.1}>
+          ao buscar os dados do evento:
+        </Text>
+        <Text mt="10" fontSize={24}>
+          {error.toString()}
+        </Text>
+      </Flex>
+      <Spacer></Spacer>
+      <Flex w={'90vw'}>
+        <Image src="src/assets/blob.png"></Image>
+      </Flex>
     </Flex>
-  )
+  );
 };
 export default EventInfo;
