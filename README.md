@@ -1,27 +1,30 @@
-# React + TypeScript + Vite
+# Arquitetura do Projeto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Visão Geral
 
-Currently, two official plugins are available:
+Esta seção oferece uma visão detalhada da arquitetura do nosso projeto, considerando os requisitos atuais da aplicação.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Diagrama de Arquitetura (C4 - Nível 3)
 
-## Expanding the ESLint configuration
+![Diagrama de Arquitetura](caminho/para/o/diagrama.png)
+Este diagrama em nível de componentes (C4 - Nível 3) ilustra a estrutura e a interconexão dos componentes principais da nossa aplicação.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Estilo(s) Arquitetural(is) Adotado(s)
 
-- Configure the top-level `parserOptions` property like this:
+- **Estilo 1:** Descrição breve do estilo arquitetural, como 'Arquitetura em Camadas', 'Microserviços', etc.
+- **Estilo 2:** Descrição breve de outro estilo arquitetural, se aplicável.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+### Descrição dos Principais Componentes
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Abaixo estão os principais componentes da nossa arquitetura, juntamente com suas responsabilidades:
+
+- **Componente 1:** Descrição sucinta de suas responsabilidades.
+- **Componente 2:** Descrição sucinta de suas responsabilidades.
+- **Componente 3:** Descrição sucinta de suas responsabilidades.
+- ... (continue conforme necessário)
+
+### Padrão de Projeto Adotado
+
+Para o projeto do componente [Nome do Componente], adotamos o padrão de projeto [Nome do Padrão de Projeto], como Singleton, Factory, Observer, etc.
+
+- **Justificativa:** Breve explicação do motivo pelo qual este padrão de projeto foi escolhido para este componente.
