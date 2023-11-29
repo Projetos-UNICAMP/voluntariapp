@@ -1,17 +1,13 @@
 // SimpleText.tsx
 import React from 'react';
-import { Text as ChakraText } from '@chakra-ui/react';
+import { Text as ChakraText, StyleProps } from '@chakra-ui/react';
 
-export interface SimpleTextProps {
-  value: string;
+export interface SimpleTextProps extends StyleProps {
+    value: string;
 }
 
-const SimpleText: React.FC<SimpleTextProps> = ({ value }) => {
-  return (
-    <ChakraText marginTop={2} marginBottom={2}>
-      {value}
-    </ChakraText>
-  );
+const SimpleText: React.FC<SimpleTextProps> = ({ value, ...styleProps }) => {
+    return <ChakraText {...styleProps}>{value}</ChakraText>;
 };
 
 export default SimpleText;
