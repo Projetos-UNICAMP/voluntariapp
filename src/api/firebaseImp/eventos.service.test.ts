@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import { eventoService } from './eventos.service';
-import { db } from '../../config/firebase';
-import { addDoc, collection, getDoc, doc } from 'firebase/firestore';
+// import { db } from '../../config/firebase';
+import { addDoc, getDoc } from 'firebase/firestore';
 
 // Mock Firestore methods
 vi.mock('firebase/firestore', () => ({
@@ -9,7 +9,7 @@ vi.mock('firebase/firestore', () => ({
   collection: vi.fn(),
   getDoc: vi.fn(),
   doc: vi.fn(),
-  getFirestore: vi.fn()
+  getFirestore: vi.fn(),
 }));
 
 describe('EventoService', () => {
@@ -25,11 +25,13 @@ describe('EventoService', () => {
       const mockResponse = { id: 'abc123' };
       mockAddDoc.mockResolvedValue(mockResponse);
 
-      const payload = { nomeDoEvento: "Evento teste",
-        description: "evento realizado com fins de teste",
-        local: "Unicamp",
-        nomeResponsavel: "Breno",
-        telefoneResponsavel: "9987-0987"};
+      const payload = {
+        nomeDoEvento: 'Evento teste',
+        description: 'evento realizado com fins de teste',
+        local: 'Unicamp',
+        nomeResponsavel: 'Breno',
+        telefoneResponsavel: '9987-0987',
+      };
       const result = await eventoService.criarNovoEvento(payload);
 
       expect(addDoc).toHaveBeenCalled();
@@ -41,13 +43,17 @@ describe('EventoService', () => {
       const mockAddDoc = addDoc as Mock;
       mockAddDoc.mockRejectedValue(new Error('Failed to create a new event'));
 
-      const payload = { nomeDoEvento: "Evento teste",
-      description: "evento realizado com fins de teste",
-      local: "Unicamp",
-      nomeResponsavel: "Breno",
-      telefoneResponsavel: "9987-0987"};
+      const payload = {
+        nomeDoEvento: 'Evento teste',
+        description: 'evento realizado com fins de teste',
+        local: 'Unicamp',
+        nomeResponsavel: 'Breno',
+        telefoneResponsavel: '9987-0987',
+      };
 
-      await expect(eventoService.criarNovoEvento(payload)).rejects.toThrow('Failed to create a new event');
+      await expect(eventoService.criarNovoEvento(payload)).rejects.toThrow(
+        'Failed to create a new event'
+      );
     });
   });
 
@@ -55,8 +61,9 @@ describe('EventoService', () => {
     it('fetches an event by code successfully', async () => {
       // Mock the getDoc to resolve with an object that mimics a Firestore document snapshot
       const mockGetDoc = getDoc as Mock;
-      const mockDocRef = {}; // This would be whatever `doc(db, 'Eventos', 'some-code')` returns
-      const mockData = { /* your DadosEvento data */ };
+      const mockData = {
+        /* your DadosEvento data */
+      };
       const mockDocSnap = {
         exists: () => true,
         data: () => mockData,
@@ -74,7 +81,6 @@ describe('EventoService', () => {
     it('throws an error when no event is found', async () => {
       // Mock the getDoc to resolve with an object that mimics a Firestore document snapshot
       const mockGetDoc = getDoc as Mock;
-      const mockDocRef = {}; // This would be whatever `doc(db, 'Eventos', 'invalid-code')` returns
       const mockDocSnap = {
         exists: () => false,
         data: vi.fn(),
@@ -84,7 +90,9 @@ describe('EventoService', () => {
 
       const codigo = 'invalid-code';
 
-      await expect(eventoService.buscarEventoPorCodigo(codigo)).rejects.toThrow(`No event found with code: ${codigo}`);
+      await expect(eventoService.buscarEventoPorCodigo(codigo)).rejects.toThrow(
+        `No event found with code: ${codigo}`
+      );
     });
   });
 });

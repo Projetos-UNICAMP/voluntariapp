@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // src/components/FinalButton/FinalButton.tsx
 import { Button, ButtonProps, StyleProps } from '@chakra-ui/react';
 

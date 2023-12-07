@@ -1,6 +1,5 @@
 import { Flex } from '@chakra-ui/react';
 import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLayout';
-import AppLogo, { LogoSize } from '../Components/AppLogo/AppLogo';
 import TitleText from '../Components/TitleText/TitleText';
 import SimpleText from '../Components/SimpleText/SimpleText';
 import FinalButton, {
@@ -8,7 +7,7 @@ import FinalButton, {
 } from '../Components/FinalButton/FinalButton';
 import { useNavigate } from 'react-router-dom';
 import FinalTextInputField from '../Components/FinalTextInputField/FinalTextInputField';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { EventoAPIMock } from '../api/eventos.api';
 import { DadosEvento, PayloadNovoEvento } from '../api/eventos.api';
 
@@ -40,28 +39,34 @@ const CreateEventPage = () => {
             onChange={function (e) {
               console.log(e);
               eventData = { ...dadosEvento };
-              eventData.nomeDoEvento = e;
+              eventData.nomeDoEvento = e.target.value;
               setDadosEvento({ ...eventData });
               console.log(dadosEvento);
-            }}></FinalTextInputField>
+            }}
+            value={''}
+            name={''}></FinalTextInputField>
           <FinalTextInputField
             placeholder="Descrição"
             onChange={function (e) {
               console.log(e);
               eventData = { ...dadosEvento };
-              eventData.description = e;
+              eventData.description = e.target.value;
               setDadosEvento({ ...eventData });
               console.log(dadosEvento);
-            }}></FinalTextInputField>
+            }}
+            value={''}
+            name={''}></FinalTextInputField>
           <FinalTextInputField
             placeholder="Local"
             onChange={function (e) {
               console.log(e);
               eventData = { ...dadosEvento };
-              eventData.local = e;
+              eventData.local = e.target.value;
               setDadosEvento({ ...eventData });
               console.log(dadosEvento);
-            }}></FinalTextInputField>
+            }}
+            value={''}
+            name={''}></FinalTextInputField>
           <SimpleText
             value={'E agora sobre o responsável pelo evento:'}></SimpleText>
           <FinalTextInputField
@@ -69,19 +74,23 @@ const CreateEventPage = () => {
             onChange={function (e) {
               console.log(e);
               eventData = { ...dadosEvento };
-              eventData.nomeResponsavel = e;
+              eventData.nomeResponsavel = e.target.value;
               setDadosEvento({ ...eventData });
               console.log(dadosEvento);
-            }}></FinalTextInputField>
+            }}
+            value={''}
+            name={''}></FinalTextInputField>
           <FinalTextInputField
             placeholder="Telefone"
             onChange={function (e) {
               console.log(e);
               eventData = { ...dadosEvento };
-              eventData.telefoneResponsavel = e;
+              eventData.telefoneResponsavel = e.target.value;
               setDadosEvento({ ...eventData });
               console.log(dadosEvento);
-            }}></FinalTextInputField>
+            }}
+            value={''}
+            name={''}></FinalTextInputField>
           <FinalButton
             label={'criar evento'}
             style={{
