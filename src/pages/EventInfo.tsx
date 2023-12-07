@@ -1,4 +1,4 @@
-import { Flex, Image, Text, Spacer, Spinner, Center } from '@chakra-ui/react';
+import { Flex, Image, Text, Spacer, Spinner } from '@chakra-ui/react';
 import TopMenu from '../Components/TopMenu/TopMenu';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -74,7 +74,12 @@ const EventInfo = () => {
     return (
       <Flex flexDir="column" w="100vw" h="100vh">
         <TopMenu mt="2vh"></TopMenu>
-        <Spinner height={200} width={200} alignSelf={"center"} mt="25vh" borderWidth={5}></Spinner>
+        <Spinner
+          height={200}
+          width={200}
+          alignSelf={'center'}
+          mt="25vh"
+          borderWidth={5}></Spinner>
         <Spacer></Spacer>
         <Flex w={'90vw'}>
           <Image src="src/assets/blob.png"></Image>
