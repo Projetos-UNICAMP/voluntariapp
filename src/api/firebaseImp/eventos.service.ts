@@ -7,9 +7,10 @@ import {
   DadosEvento,
   IEventoApi,
 } from '../eventos.api';
+import { eventosRoute } from './configuration';
 
 class EventoService implements IEventoApi {
-  private readonly collectionName = 'Eventos';
+  private readonly collectionName = eventosRoute;
 
   // Method to create a new event
   async criarNovoEvento(
