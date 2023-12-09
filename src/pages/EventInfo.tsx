@@ -1,6 +1,6 @@
-import { Flex, Image, Text, Spacer, Spinner } from '@chakra-ui/react';
+import { Flex, Spacer } from '@chakra-ui/react';
 import TopMenu from '../Components/TopMenu/TopMenu';
-import { useNavigate, useLocation } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { EventoAPIMock } from '../api/eventos.api';
 import { DadosEvento } from '../api/eventos.api';
