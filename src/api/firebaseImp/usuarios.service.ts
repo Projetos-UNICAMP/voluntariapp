@@ -27,13 +27,11 @@ class UsuarioService implements IUsuarioAPI {
 
   async cadastrarNovoUsuario(payload: PayloadNovoUsuario): Promise<boolean> {
     try {
-      // Remove the senha property before saving to Firestore
       const { senha, email, ...userInfo } = payload;
 
       const userCredential: UserCredential =
         await createUserWithEmailAndPassword(this.auth, email, senha);
 
-      // Create a document in the "Usuarios" collection with the UID as the document ID
       await setDoc(doc(this.userCollection, userCredential.user.uid), {
         email,
         ...userInfo,
@@ -66,7 +64,6 @@ class UsuarioService implements IUsuarioAPI {
     }
   }
 
-  // Utility function to get user information from Firestore
   private async getUserInfo(
     userDocRef: DocumentReference<DocumentData, DocumentData>
   ): Promise<InformacoesUsuario> {
@@ -80,5 +77,4 @@ class UsuarioService implements IUsuarioAPI {
   }
 }
 
-// Export an instance of the service
 export const usuarioService = new UsuarioService();
