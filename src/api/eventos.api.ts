@@ -29,8 +29,8 @@ export const EventoAPIMock: IEventoApi = {
     payload: PayloadNovoEvento
   ): Promise<RespostaNovoEvento> {
     console.log(payload);
-    return new Promise<RespostaNovoEvento>(() =>
-      setTimeout(() => ({ sucesso: true, codigoEvento: '' }), 500)
+    return new Promise<RespostaNovoEvento>((resolve) =>
+      setTimeout(() => (resolve({ sucesso: true, codigoEvento: '' })), 500)
     );
   },
   buscarEventoPorCodigo: function (codigo: string): Promise<DadosEvento> {
@@ -42,6 +42,6 @@ export const EventoAPIMock: IEventoApi = {
       nomeResponsavel: 'Responsável pelo Exemplo',
       telefoneResponsavel: '(35) 99999-9999',
     };
-    return new Promise<DadosEvento>(() => setTimeout(() => mockEvento, 500));
+    return new Promise<DadosEvento>((resolve) => setTimeout(() => resolve(mockEvento), 500));
   },
 };
