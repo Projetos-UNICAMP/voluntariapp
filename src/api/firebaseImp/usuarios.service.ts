@@ -18,6 +18,7 @@ import {
   InformacoesUsuario,
   PayloadNovoUsuario,
 } from '../usuarios.api';
+import { handleErrorWithLogging } from '../errorHandler';
 
 class UsuarioService implements IUsuarioAPI {
   private auth = getAuth();
@@ -38,7 +39,7 @@ class UsuarioService implements IUsuarioAPI {
 
       return true;
     } catch (error) {
-      console.error('Error in user registration:', error);
+      handleErrorWithLogging(error, 'Falha ao cadastrar novo usuário');
       return false;
     }
   }
@@ -58,7 +59,7 @@ class UsuarioService implements IUsuarioAPI {
 
       return userInfo;
     } catch (error) {
-      console.error('Error in user login:', error);
+      handleErrorWithLogging(error, 'Falha ao fazer login');
       throw new Error('Failed to log in');
     }
   }

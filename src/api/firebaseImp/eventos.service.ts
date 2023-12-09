@@ -6,6 +6,7 @@ import {
   DadosEvento,
   IEventoApi,
 } from '../eventos.api';
+import { handleErrorWithLogging } from '../errorHandler';
 
 class EventoService implements IEventoApi {
   private readonly collectionName = 'Eventos';
@@ -20,7 +21,7 @@ class EventoService implements IEventoApi {
         codigoEvento: docRef.id,
       };
     } catch (error) {
-      console.error('Error adding document: ', error);
+      handleErrorWithLogging(error, 'Falha ao criar novo evento');
       throw new Error('Failed to create a new event');
     }
   }
