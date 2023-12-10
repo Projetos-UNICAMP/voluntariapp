@@ -1,8 +1,7 @@
 // TopMenu.tsx
 import React from 'react';
-import { Flex, StyleProps } from '@chakra-ui/react';
+import { Flex, StyleProps, Text } from '@chakra-ui/react';
 import AppLogo, { LogoSize } from '../AppLogo/AppLogo';
-import SimpleText from '../SimpleText/SimpleText';
 import { useNavigate } from 'react-router-dom';
 
 export interface TopMenuProps extends StyleProps {}
@@ -19,18 +18,16 @@ const TopMenu: React.FC<TopMenuProps> = ({ ...styleProps }) => {
         <AppLogo size={LogoSize.Small}></AppLogo>
       </Flex>
       <Flex mr="1vw" style={{ cursor: 'pointer' }}>
-        <SimpleText
-          value={'Página Inicial'}
+        <Text
           fontWeight="bold"
           fontSize="1vw"
-          onClick={() => navigate('/paginal-inicial')}></SimpleText>
+          onClick={() => navigate('/paginal-inicial')}>Página Inicial</Text>
       </Flex>
       <Flex mr="1vw" style={{ cursor: 'pointer' }}>
-        <SimpleText
-          value={'Login'}
+        <Text
           fontWeight="bold"
           fontSize="1vw"
-          onClick={() => navigate('/cadastro')}></SimpleText>
+          onClick={() => navigate('/cadastro')}>Login</Text>
       </Flex>
     </Flex>
   );
