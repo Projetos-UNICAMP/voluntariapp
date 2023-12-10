@@ -1,5 +1,4 @@
-import { db } from '../../config/firebase';
-import { doc, getDoc, addDoc, collection } from 'firebase/firestore';
+import { doc, getDoc, addDoc, collection  } from 'firebase/firestore';
 import {
   PayloadNovoEvento,
   RespostaNovoEvento,
@@ -8,10 +7,11 @@ import {
 } from '../eventos.api';
 import { eventosRoute } from './configuration';
 import { handleErrorWithLogging } from '../errorHandler';
+import { db } from '../../config/firebase';
 
 class EventoService implements IEventoApi {
   private readonly collectionName = eventosRoute;
-
+  
   async criarNovoEvento(
     payload: PayloadNovoEvento
   ): Promise<RespostaNovoEvento> {

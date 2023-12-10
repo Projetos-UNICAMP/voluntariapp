@@ -1,9 +1,8 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import React from 'react';
-import { extendTheme } from '@chakra-ui/react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import { RouterProvider } from 'react-router-dom';
+import './index.css';
 import { browserRouter } from './routes/routes.tsx';
 
 const colors = {
