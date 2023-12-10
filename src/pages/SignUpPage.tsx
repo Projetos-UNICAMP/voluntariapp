@@ -39,7 +39,7 @@ const SignUpPage = () => {
     <RightImageLayoutComponent imageUrl={'src/assets/cuted.png'}>
       <Flex flexDir={'column'} verticalAlign={'middle'} w={'55vw'}>
         <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>
-          <TitleText value={'Bora Voluntariar!'} mt={10}></TitleText>
+          <TitleText value={'Bora Voluntariar!'}></TitleText>
           <Flex flexDir={'column'} mt={6}>
             <SimpleText value={'Algumas informações sobre você: '}></SimpleText>
           </Flex>
