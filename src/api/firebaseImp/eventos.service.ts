@@ -6,10 +6,11 @@ import {
   DadosEvento,
   IEventoApi,
 } from '../eventos.api';
+import { eventosRoute } from './configuration';
 import { handleErrorWithLogging } from '../errorHandler';
 
 class EventoService implements IEventoApi {
-  private readonly collectionName = 'Eventos';
+  private readonly collectionName = eventosRoute;
 
   async criarNovoEvento(
     payload: PayloadNovoEvento

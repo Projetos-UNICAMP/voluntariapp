@@ -18,12 +18,14 @@ import {
   InformacoesUsuario,
   PayloadNovoUsuario,
 } from '../usuarios.api';
+import { usuariosRoute } from './configuration';
 import { handleErrorWithLogging } from '../errorHandler';
 
 class UsuarioService implements IUsuarioAPI {
   private auth = getAuth();
   private db = getFirestore();
-  private userCollection = collection(this.db, 'Usuarios');
+  private readonly collectionName = usuariosRoute;
+  private userCollection = collection(this.db, this.collectionName);
 
   async cadastrarNovoUsuario(payload: PayloadNovoUsuario): Promise<boolean> {
     try {
@@ -54,7 +56,7 @@ class UsuarioService implements IUsuarioAPI {
         email,
         senha
       );
-      const userDocRef = doc(this.db, 'Usuarios', userCredential.user.uid);
+      const userDocRef = doc(this.db, this.collectionName, userCredential.user.uid);
       const userInfo = await this.getUserInfo(userDocRef);
 
       return userInfo;
