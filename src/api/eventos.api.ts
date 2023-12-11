@@ -118,6 +118,12 @@ export const EventoApiMock: IEventoApi = {
       data: new Date()
     };
 
+    const mockDiaDeEvento2: DiaDeEvento = {
+      turnos: [mockTurno],
+      // data will be tomorow
+      data: new Date(new Date().setDate(new Date().getDate() + 1))
+    };
+
     return {
       codigoEvento: 'teste123',
       nomeDoEvento: 'Evento Mock',
@@ -125,7 +131,7 @@ export const EventoApiMock: IEventoApi = {
       local: 'Local Mock',
       nomeResponsavel: 'Responsável Mock',
       telefoneResponsavel: '1234567890',
-      dias: [mockDiaDeEvento],
+      dias: [mockDiaDeEvento, mockDiaDeEvento2],
       voluntarios: [],
     };
   }
