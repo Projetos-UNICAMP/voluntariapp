@@ -19,7 +19,7 @@ export interface IUsuarioAPI {
   loginComEmailESenha: (
     email: string,
     senha: string
-  ) => Promise<InformacoesUsuario>;
+  ) => Promise<InformacoesUsuario | null>;
 }
 
 export const UsuarioAPIMock: IUsuarioAPI = {

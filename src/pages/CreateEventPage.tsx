@@ -1,25 +1,16 @@
 import { Flex } from '@chakra-ui/react';
-import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLayout';
-import TitleText from '../Components/TitleText/TitleText';
-import SimpleText from '../Components/SimpleText/SimpleText';
+import { useState } from 'react';
 import FinalButton, {
   ButtonStyleOptions,
 } from '../Components/FinalButton/FinalButton';
-import { useNavigate } from 'react-router-dom';
 import FinalTextInputField from '../Components/FinalTextInputField/FinalTextInputField';
-import { useState } from 'react';
-import { EventoAPIMock } from '../api/eventos.api';
-import { DadosEvento, PayloadNovoEvento } from '../api/eventos.api';
+import SimpleText from '../Components/SimpleText/SimpleText';
+import TitleText from '../Components/TitleText/TitleText';
+import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLayout';
+import { PayloadNovoEvento } from '../api/eventos.api';
+import { eventoService } from '../api/firebaseImp/eventos.service';
 
 const CreateEventPage = () => {
-  const navigate = useNavigate();
-  let eventData: DadosEvento = {
-    nomeDoEvento: '',
-    description: '',
-    local: '',
-    nomeResponsavel: '',
-    telefoneResponsavel: '',
-  };
   const [dadosEvento, setDadosEvento] = useState<PayloadNovoEvento>({
     nomeDoEvento: '',
     description: '',
@@ -27,6 +18,11 @@ const CreateEventPage = () => {
     nomeResponsavel: '',
     telefoneResponsavel: '',
   });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDadosEvento({ ...dadosEvento, [event.target.name]: event.target.value });
+  };
+
   return (
     <RightImageLayoutComponent imageUrl={'src/assets/discs.png'}>
       <Flex flexDir={'column'} verticalAlign={'middle'} w={'55vw'}>
@@ -34,63 +30,40 @@ const CreateEventPage = () => {
           <TitleText value={'Bora lá!'}></TitleText>
           <SimpleText
             value={'Primeiro algumas infos sobre o evento:'}></SimpleText>
+
           <FinalTextInputField
             placeholder="Nome do evento"
-            onChange={function (e) {
-              console.log(e);
-              eventData = { ...dadosEvento };
-              eventData.nomeDoEvento = e.target.value;
-              setDadosEvento({ ...eventData });
-              console.log(dadosEvento);
-            }}
-            value={''}
-            name={''}></FinalTextInputField>
+            onChange={handleChange}
+            value={dadosEvento.nomeDoEvento}
+            name={'nomeDoEvento'}></FinalTextInputField>
+
           <FinalTextInputField
             placeholder="Descrição"
-            onChange={function (e) {
-              console.log(e);
-              eventData = { ...dadosEvento };
-              eventData.description = e.target.value;
-              setDadosEvento({ ...eventData });
-              console.log(dadosEvento);
-            }}
-            value={''}
-            name={''}></FinalTextInputField>
+            onChange={handleChange}
+            value={dadosEvento.description}
+            name={'description'}></FinalTextInputField>
+
           <FinalTextInputField
             placeholder="Local"
-            onChange={function (e) {
-              console.log(e);
-              eventData = { ...dadosEvento };
-              eventData.local = e.target.value;
-              setDadosEvento({ ...eventData });
-              console.log(dadosEvento);
-            }}
-            value={''}
-            name={''}></FinalTextInputField>
+            onChange={handleChange}
+            value={dadosEvento.local}
+            name={'local'}></FinalTextInputField>
+
           <SimpleText
             value={'E agora sobre o responsável pelo evento:'}></SimpleText>
+
           <FinalTextInputField
             placeholder="Nome do responsável"
-            onChange={function (e) {
-              console.log(e);
-              eventData = { ...dadosEvento };
-              eventData.nomeResponsavel = e.target.value;
-              setDadosEvento({ ...eventData });
-              console.log(dadosEvento);
-            }}
-            value={''}
-            name={''}></FinalTextInputField>
+            onChange={handleChange}
+            value={dadosEvento.nomeResponsavel}
+            name={'nomeResponsavel'}></FinalTextInputField>
+
           <FinalTextInputField
             placeholder="Telefone"
-            onChange={function (e) {
-              console.log(e);
-              eventData = { ...dadosEvento };
-              eventData.telefoneResponsavel = e.target.value;
-              setDadosEvento({ ...eventData });
-              console.log(dadosEvento);
-            }}
-            value={''}
-            name={''}></FinalTextInputField>
+            onChange={handleChange}
+            value={dadosEvento.telefoneResponsavel}
+            name={'telefoneResponsavel'}></FinalTextInputField>
+
           <FinalButton
             label={'criar evento'}
             style={{
@@ -100,15 +73,16 @@ const CreateEventPage = () => {
               mb: 4,
             }}
             onClick={() => {
-              EventoAPIMock.criarNovoEvento(dadosEvento)
+              eventoService
+                .criarNovoEvento(dadosEvento)
                 .then((res) => {
-                  console.log(res.codigoEvento);
-                  console.log(res.sucesso);
+                  alert(
+                    `Evento criado com sucesso! Forneça o código: ${res.codigoEvento}`
+                  );
                 })
                 .catch((err) => {
                   console.log(err);
                 });
-              navigate('/criar-evento', { state: { dadosEvento } });
             }}></FinalButton>
         </Flex>
       </Flex>

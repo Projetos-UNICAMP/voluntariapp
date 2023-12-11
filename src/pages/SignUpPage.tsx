@@ -9,9 +9,13 @@ import SimpleText from '../Components/SimpleText/SimpleText';
 import TitleText from '../Components/TitleText/TitleText';
 import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLayout';
 import { Cargo, PayloadNovoUsuario } from '../api/usuarios.api';
-import { usuarioService } from '../api/firebaseImp/usuarios.service';
+import { useAuth } from '../Providers/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<PayloadNovoUsuario>({
     nome: '',
     email: '',
@@ -25,10 +29,8 @@ const SignUpPage = () => {
   };
 
   const handleSubmit = async () => {
-    const sucesso = await usuarioService.cadastrarNovoUsuario(user);
-    if (sucesso) {
-      alert(`Usuário ${user.nome} criado com Sucesso!`);
-    }
+    await register(user);
+    navigate('/');
   };
 
   const options = [
