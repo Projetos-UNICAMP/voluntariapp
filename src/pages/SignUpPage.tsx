@@ -8,7 +8,8 @@ import FinalTextInputField from '../Components/FinalTextInputField/FinalTextInpu
 import SimpleText from '../Components/SimpleText/SimpleText';
 import TitleText from '../Components/TitleText/TitleText';
 import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLayout';
-import { Cargo, PayloadNovoUsuario, UsuarioAPIMock } from '../api/usuarios.api';
+import { Cargo, PayloadNovoUsuario } from '../api/usuarios.api';
+import { usuarioService } from '../api/firebaseImp/usuarios.service';
 
 const SignUpPage = () => {
   const [user, setUser] = useState<PayloadNovoUsuario>({
@@ -24,7 +25,7 @@ const SignUpPage = () => {
   };
 
   const handleSubmit = async () => {
-    const sucesso = await UsuarioAPIMock.cadastrarNovoUsuario(user);
+    const sucesso = await usuarioService.cadastrarNovoUsuario(user);
     if (sucesso) {
       alert(`Usuário ${user.nome} criado com Sucesso!`);
     }
@@ -53,31 +54,31 @@ const SignUpPage = () => {
               onChange={handleChange}></FinalTextInputField>
           </Flex>
           <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
-          <FinalTextInputField
-            placeholder="Email:"
-            value={user.email}
-            name="email"
-            onChange={handleChange}></FinalTextInputField>
-            </Flex>
-            <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
-          <FinalTextInputField
-            placeholder="Telefone:"
-            value={user.telefone}
-            name="telefone"
-            onChange={handleChange}></FinalTextInputField>
-            </Flex>
-            <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
-          <FinalTextInputField
-            placeholder="Senha:"
-            value={user.senha}
-            name="senha"
-            onChange={handleChange}></FinalTextInputField>
-            </Flex>
-            <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
-          <FinalDropdown
-            label="Como você pode ajudar?"
-            options={options}></FinalDropdown>
-        </Flex>
+            <FinalTextInputField
+              placeholder="Email:"
+              value={user.email}
+              name="email"
+              onChange={handleChange}></FinalTextInputField>
+          </Flex>
+          <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
+            <FinalTextInputField
+              placeholder="Telefone:"
+              value={user.telefone}
+              name="telefone"
+              onChange={handleChange}></FinalTextInputField>
+          </Flex>
+          <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
+            <FinalTextInputField
+              placeholder="Senha:"
+              value={user.senha}
+              name="senha"
+              onChange={handleChange}></FinalTextInputField>
+          </Flex>
+          <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
+            <FinalDropdown
+              label="Como você pode ajudar?"
+              options={options}></FinalDropdown>
+          </Flex>
         </Flex>
         <Flex flexDir={'column'} width={'100%'} textAlign={'center'}>
           <FinalButton

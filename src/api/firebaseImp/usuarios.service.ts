@@ -1,8 +1,7 @@
 import {
   UserCredential,
   createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from 'firebase/auth';
 import {
   DocumentData,
@@ -10,29 +9,27 @@ import {
   collection,
   doc,
   getDoc,
-  getFirestore,
-  setDoc,
+  setDoc
 } from 'firebase/firestore';
+import { auth, db } from '../../config/firebase';
+import { handleErrorWithLogging } from '../errorHandler';
 import {
   IUsuarioAPI,
   InformacoesUsuario,
   PayloadNovoUsuario,
 } from '../usuarios.api';
 import { usuariosRoute } from './configuration';
-import { handleErrorWithLogging } from '../errorHandler';
 
 class UsuarioService implements IUsuarioAPI {
-  private auth = getAuth();
-  private db = getFirestore();
   private readonly collectionName = usuariosRoute;
-  private userCollection = collection(this.db, this.collectionName);
+  private userCollection = collection(db, this.collectionName);
 
   async cadastrarNovoUsuario(payload: PayloadNovoUsuario): Promise<boolean> {
     try {
       const { senha, email, ...userInfo } = payload;
 
       const userCredential: UserCredential =
-        await createUserWithEmailAndPassword(this.auth, email, senha);
+        await createUserWithEmailAndPassword(auth, email, senha);
 
       await setDoc(doc(this.userCollection, userCredential.user.uid), {
         email,
@@ -52,11 +49,11 @@ class UsuarioService implements IUsuarioAPI {
   ): Promise<InformacoesUsuario> {
     try {
       const userCredential: UserCredential = await signInWithEmailAndPassword(
-        this.auth,
+        auth,
         email,
         senha
       );
-      const userDocRef = doc(this.db, this.collectionName, userCredential.user.uid);
+      const userDocRef = doc(db, this.collectionName, userCredential.user.uid);
       const userInfo = await this.getUserInfo(userDocRef);
 
       return userInfo;
