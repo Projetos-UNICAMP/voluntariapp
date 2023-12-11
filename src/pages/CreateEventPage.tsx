@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, Flex } from '@chakra-ui/react';
+import { Box, Button, Flex } from '@chakra-ui/react';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import FinalButton, {
@@ -12,8 +12,11 @@ import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLay
 import { PayloadNovoEvento } from '../api/eventos.api';
 import { eventoService } from '../api/firebaseImp/eventos.service';
 import { set } from 'firebase/database';
+import DateRangePicker from '../Components/DateRangePicker/DateRangePicker';
+import { useNavigate } from 'react-router-dom';
 
 const CreateEventPage = () => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
 
   const [dadosEvento, setDadosEvento] = useState<PayloadNovoEvento>({
@@ -22,9 +25,9 @@ const CreateEventPage = () => {
     local: '',
     nomeResponsavel: '',
     telefoneResponsavel: '',
-    dataInicio: new Date(),
-    dataFim: new Date(),
     numTurnosPorDia: 0,
+    dataInicio: null,
+    dataFim: null,
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +43,11 @@ const CreateEventPage = () => {
         <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>
           <Button
             onClick={() => {
-              setCurrentPage(0);
+              if (currentPage == 0) {
+                navigate('/');
+              } else {
+                setCurrentPage(0);
+              }
             }}
             variant="outline"
             size="sm"
@@ -55,6 +62,8 @@ const CreateEventPage = () => {
               currentPage == 0 ? 'Bora lá!' : 'Quando vai ser?'
             }></TitleText>
           <SimpleText
+            mt="15px"
+            mb="15px"
             value={
               currentPage == 0
                 ? 'Primeiro algumas infos sobre o evento:'
@@ -84,13 +93,29 @@ const CreateEventPage = () => {
             </>
           )}
 
-          {currentPage == 1 && <></>}
+          {currentPage == 1 && (
+            <>
+              <Box mt={2} mb={3}>
+                <DateRangePicker
+                  onDateChange={(dates) => {
+                    const [start, end] = dates;
+                    setDadosEvento({
+                      ...dadosEvento,
+                      dataInicio: start,
+                      dataFim: end,
+                    });
+                  }}
+                />
+              </Box>
+            </>
+          )}
 
           <SimpleText
+            mb="15px"
             value={
               currentPage == 0
                 ? 'E agora sobre o responsável pelo evento:'
-                : 'Qual é o número mínimo de colaboradores?'
+                : 'Qual é o número de turnos por dia?'
             }></SimpleText>
 
           {currentPage == 0 && (
@@ -111,6 +136,17 @@ const CreateEventPage = () => {
             </>
           )}
 
+          {currentPage == 1 && (
+            <>
+              <FinalTextInputField
+                placeholder="Número de turnos"
+                onChange={handleChange}
+                value={dadosEvento.numTurnosPorDia.toString()}
+                name={'numTurnosPorDia'}
+                mb={4}></FinalTextInputField>
+            </>
+          )}
+
           <FinalButton
             label={
               currentPage == 0 ? 'prosseguir para as datas' : 'criar evento'
@@ -122,17 +158,20 @@ const CreateEventPage = () => {
               mb: 4,
             }}
             onClick={() => {
-              setCurrentPage(1);
-              // eventoService
-              //   .criarNovoEvento(dadosEvento)
-              //   .then((res) => {
-              //     alert(
-              //       `Evento criado com sucesso! Forneça o código: ${res.codigoEvento}`
-              //     );
-              //   })
-              //   .catch((err) => {
-              //     console.log(err);
-              //   });
+              if (currentPage == 0) {
+                setCurrentPage(1);
+              } else {
+                eventoService
+                  .criarNovoEvento(dadosEvento)
+                  .then((res) => {
+                    alert(
+                      `Evento criado com sucesso! Forneça o código: ${res.codigoEvento}`
+                    );
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
             }}></FinalButton>
         </Flex>
       </Flex>
