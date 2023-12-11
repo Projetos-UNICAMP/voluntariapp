@@ -14,14 +14,15 @@
     "test:debug": "node --inspect-brk ./node_modules/vitest/vitest.mjs --run"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@testing-library/react": "^14.0.0",
-    "firebase": "^10.5.2",
     "@fontsource/open-sans": "^5.0.17",
     "@fontsource/raleway": "^5.0.15",
     "@fontsource/work-sans": "^5.0.15",
+    "@testing-library/react": "^14.0.0",
+    "firebase": "^10.5.2",
     "framer-motion": "^10.16.4",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
