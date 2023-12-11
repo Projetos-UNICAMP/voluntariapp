@@ -1,19 +1,19 @@
 import { Flex, Spacer } from '@chakra-ui/react';
-import TopMenu from '../Components/TopMenu/TopMenu';
-import {  useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { EventoAPIMock } from '../api/eventos.api';
-import { DadosEvento } from '../api/eventos.api';
-import TitleText from '../Components/TitleText/TitleText';
-import SimpleText from '../Components/SimpleText/SimpleText';
-import WideBlob from '../Components/WideBlob/WideBlob';
+import { useLocation } from 'react-router-dom';
 import BackButton from '../Components/BackButton/BackButton';
 import LoadingSpinner from '../Components/LoadingSpinner/LoadingSpinner';
+import SimpleText from '../Components/SimpleText/SimpleText';
+import TitleText from '../Components/TitleText/TitleText';
+import TopMenu from '../Components/TopMenu/TopMenu';
+import WideBlob from '../Components/WideBlob/WideBlob';
+import { DadosEvento } from '../api/eventos.api';
+import { eventoService } from '../api/firebaseImp/eventos.service';
 
 const EventInfo = () => {
   useEffect(() => {}, []);
   const location = useLocation();
-  const eventCode = location.state;
+  const eventCode = location.state?.eventCode;
   console.log(eventCode);
   const [state, setState] = useState('');
   const [eventData, setEventData] = useState<DadosEvento | undefined>(
@@ -22,7 +22,8 @@ const EventInfo = () => {
   const [error, setError] = useState(false);
   useEffect(() => {
     setState('loading');
-    EventoAPIMock.buscarEventoPorCodigo(eventCode)
+    eventoService
+      .buscarEventoPorCodigo(eventCode)
       .then((res) => {
         setEventData(res);
         setState('success');
@@ -54,7 +55,11 @@ const EventInfo = () => {
       <Flex flexDir="column" w="100vw" h="100vh">
         <TopMenu mt="2vh"></TopMenu>
         <BackButton route="/"></BackButton>
-        <LoadingSpinner size={200} width={5} mt="25vh" align="center"></LoadingSpinner>
+        <LoadingSpinner
+          size={200}
+          width={5}
+          mt="25vh"
+          align="center"></LoadingSpinner>
         <Spacer></Spacer>
         <WideBlob></WideBlob>
       </Flex>

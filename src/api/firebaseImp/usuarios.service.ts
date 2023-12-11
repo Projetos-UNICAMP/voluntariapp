@@ -46,20 +46,16 @@ class UsuarioService implements IUsuarioAPI {
   async loginComEmailESenha(
     email: string,
     senha: string
-  ): Promise<InformacoesUsuario> {
+  ): Promise<InformacoesUsuario | null> {
     try {
-      const userCredential: UserCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        senha
-      );
-      const userDocRef = doc(db, this.collectionName, userCredential.user.uid);
-      const userInfo = await this.getUserInfo(userDocRef);
+      const userCredential: UserCredential = await signInWithEmailAndPassword(auth, email, senha);
+      const userDocRef: DocumentReference = doc(db, this.collectionName, userCredential.user.uid);
+      const userInfo: InformacoesUsuario = await this.getUserInfo(userDocRef);
 
       return userInfo;
     } catch (error) {
       handleErrorWithLogging(error, 'Falha ao fazer login');
-      throw new Error('Failed to log in');
+      return null; 
     }
   }
 

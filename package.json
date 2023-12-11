@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest"
+    "test": "vitest",
+    "test:debug": "node --inspect-brk ./node_modules/vitest/vitest.mjs --run"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.1",
