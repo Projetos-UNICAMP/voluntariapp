@@ -1,7 +1,7 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Router, RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import './index.css';
 import { browserRouter } from './routes/routes.tsx';
 import { AuthProvider } from './Providers/AuthProvider.tsx';
