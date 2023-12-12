@@ -3,26 +3,21 @@ import { useState } from 'react';
 import FinalButton, {
   ButtonStyleOptions,
 } from '../Components/FinalButton/FinalButton';
-import FinalDropdown from '../Components/FinalDropDown/FinalDropDown';
 import FinalTextInputField from '../Components/FinalTextInputField/FinalTextInputField';
 import SimpleText from '../Components/SimpleText/SimpleText';
 import TitleText from '../Components/TitleText/TitleText';
 import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLayout';
-import { Cargo, PayloadNovoUsuario } from '../api/usuarios.api';
 import { useAuth } from '../Providers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import PasswordInput from '../Components/PasswordInput/PasswordInput';
 
-const SignUpPage = () => {
-  const { register } = useAuth();
+const LoginPage = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [user, setUser] = useState<PayloadNovoUsuario>({
-    nome: '',
+  const [user, setUser] = useState({
     email: '',
     senha: '',
-    telefone: '',
-    cargo: Cargo.VOLUNTARIO,
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,43 +25,24 @@ const SignUpPage = () => {
   };
 
   const handleSubmit = async () => {
-    await register(user, () => navigate('/'));
+    await login(user.email, user.senha, () => navigate('/'));
   };
-
-  const options = [
-    { value: Cargo.VOLUNTARIO, label: 'Voluntário' },
-    { value: Cargo.MOTORISTA, label: 'Motorista' },
-  ];
 
   return (
     <RightImageLayoutComponent imageUrl={'src/assets/cuted.png'}>
       <Flex flexDir={'column'} verticalAlign={'middle'} w={'55vw'}>
-        <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>
-          <TitleText value={'Bora Voluntariar!'}></TitleText>
-          <Flex flexDir={'column'} mt={6}>
-            <SimpleText value={'Algumas informações sobre você: '}></SimpleText>
-          </Flex>
+        <Flex flexDir={'column'} w={'60%'} alignSelf={'center'} mb={'1vh'}>
+          <TitleText value={'Faça seu Login!'}></TitleText>
+        </Flex>
+        <Flex flexDir={'column'} w={'60%'} alignSelf={'center'} mb={'1vh'}>
+          <SimpleText value="Comece agora a ajudar"></SimpleText>
         </Flex>
         <Flex flexDir={'column'} width={'100%'}>
-          <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
-            <FinalTextInputField
-              placeholder="Nome"
-              value={user.nome}
-              name="nome"
-              onChange={handleChange}></FinalTextInputField>
-          </Flex>
           <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
             <FinalTextInputField
               placeholder="Email"
               value={user.email}
               name="email"
-              onChange={handleChange}></FinalTextInputField>
-          </Flex>
-          <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
-            <FinalTextInputField
-              placeholder="Telefone"
-              value={user.telefone}
-              name="telefone"
               onChange={handleChange}></FinalTextInputField>
           </Flex>
           <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
@@ -76,15 +52,10 @@ const SignUpPage = () => {
               name="senha"
               onChange={handleChange}></PasswordInput>
           </Flex>
-          <Flex width={'60%'} alignSelf={'center'} mt={4} mb={2}>
-            <FinalDropdown
-              label="Como você pode ajudar?"
-              options={options}></FinalDropdown>
-          </Flex>
         </Flex>
         <Flex flexDir={'column'} width={'100%'} textAlign={'center'}>
           <FinalButton
-            label={'continuar'}
+            label={'Continuar'}
             style={{
               type: ButtonStyleOptions.Primary,
               width: '20vw',
@@ -92,10 +63,24 @@ const SignUpPage = () => {
               mb: 4,
             }}
             onClick={() => handleSubmit()}></FinalButton>
+          <Flex
+            flexDir="row"
+            alignSelf={'center'}
+            justifyContent={'space-evenly'}
+            width={'25vw'}>
+            <SimpleText value={'Ainda não tem uma conta?'}></SimpleText>
+            <Flex style={{ cursor: 'pointer' }}>
+              <SimpleText
+                value="Cadastre-se!"
+                onClick={() => navigate('/cadastro')}
+                color="#0095F6"
+                weight="bold"></SimpleText>
+            </Flex>
+          </Flex>
         </Flex>
       </Flex>
     </RightImageLayoutComponent>
   );
 };
 
-export default SignUpPage;
+export default LoginPage;
