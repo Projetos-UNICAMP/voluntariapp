@@ -1,14 +1,16 @@
 import { Box } from '@chakra-ui/react';
-import { Turno } from '../../api/eventos.api';
+import { DiaDeEvento, Turno } from '../../api/eventos.api';
 import TitleText from '../TitleText/TitleText';
 import FinalButton, { ButtonStyleOptions } from '../FinalButton/FinalButton';
 
 interface ShiftCardProps {
   turno: Turno;
+  dia: DiaDeEvento;
+  handleInscrever: (dia: DiaDeEvento, turno: Turno) => void;
 }
 
 const ShiftCard = (props: ShiftCardProps) => {
-  const { turno } = props;
+  const { turno, dia, handleInscrever } = props;
   return (
     <Box
       style={{
@@ -37,9 +39,7 @@ const ShiftCard = (props: ShiftCardProps) => {
       <FinalButton
         label={'Me inscrever'}
         style={{ type: ButtonStyleOptions.Primary, mt: 4 }}
-        onClick={function (): void {
-          throw new Error('Function not implemented.');
-        }}></FinalButton>
+        onClick={() => handleInscrever(dia, turno)}></FinalButton>
     </Box>
   );
 };
