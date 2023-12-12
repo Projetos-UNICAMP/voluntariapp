@@ -35,9 +35,7 @@ const CreateEventPage = () => {
 
   return (
     <RightImageLayoutComponent
-      imageUrl={
-        currentPage == 0 ? 'src/assets/discs.png' : 'src/assets/clock.png'
-      }>
+      imageUrl={currentPage == 0 ? '/assets/discs.png' : '/assets/clock.png'}>
       <Flex flexDir={'column'} verticalAlign={'middle'} w={'55vw'}>
         <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>
           <Button

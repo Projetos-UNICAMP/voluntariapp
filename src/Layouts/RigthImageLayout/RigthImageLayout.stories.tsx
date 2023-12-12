@@ -17,5 +17,5 @@ const Template: Story<RightImageLayoutComponentProps> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  imageUrl: 'src/assets/pens.png', // replace with a sample image path for the story
+  imageUrl: '/assets/pens.png', // replace with a sample image path for the story
 };

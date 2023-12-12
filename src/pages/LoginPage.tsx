@@ -29,7 +29,7 @@ const LoginPage = () => {
   };
 
   return (
-    <RightImageLayoutComponent imageUrl={'src/assets/cuted.png'}>
+    <RightImageLayoutComponent imageUrl={'/assets/cuted.png'}>
       <Flex flexDir={'column'} verticalAlign={'middle'} w={'55vw'}>
         <Flex flexDir={'column'} w={'60%'} alignSelf={'center'} mb={'1vh'}>
           <TitleText value={'Faça seu Login!'}></TitleText>

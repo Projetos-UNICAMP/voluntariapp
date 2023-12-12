@@ -17,7 +17,7 @@ const AppLogo: React.FC<AppLogoProps> = ({ size }) => {
 
   return (
     <Image
-      src="src/assets/title.png"
+      src="/assets/title.png"
       width={imageWidth}
       height={imageHeight}
       alt="Application Logo"

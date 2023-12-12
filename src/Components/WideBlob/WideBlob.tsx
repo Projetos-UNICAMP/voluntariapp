@@ -5,7 +5,7 @@ import { Flex, Image } from '@chakra-ui/react';
 const WideBlob: React.FC = () => {
   return (
     <Flex w={'90vw'}>
-      <Image src="src/assets/blob.png"></Image>
+      <Image src="/assets/blob.png"></Image>
     </Flex>
   );
 };
