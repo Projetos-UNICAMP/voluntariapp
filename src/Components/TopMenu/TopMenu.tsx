@@ -22,19 +22,13 @@ const TopMenu: React.FC<TopMenuProps> = ({ ...styleProps }) => {
       </Flex>
       {currentUser && (
         <Flex mr="1vw" style={{ cursor: 'pointer' }}>
-          <Text
-            fontWeight="bold"
-            fontSize="20"
-            onClick={() => navigate('/paginal-inicial')}>
+          <Text fontWeight="bold" fontSize="20" onClick={() => navigate('/')}>
             {`Olá, ${currentUser?.nome}`}
           </Text>
         </Flex>
       )}
       <Flex mr="1vw" style={{ cursor: 'pointer' }}>
-        <Text
-          fontWeight="bold"
-          fontSize="20"
-          onClick={() => navigate('/paginal-inicial')}>
+        <Text fontWeight="bold" fontSize="20" onClick={() => navigate('/')}>
           Página Inicial
         </Text>
       </Flex>

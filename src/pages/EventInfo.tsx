@@ -12,12 +12,7 @@ import TitleText from '../Components/TitleText/TitleText';
 import TopMenu from '../Components/TopMenu/TopMenu';
 import WideBlob from '../Components/WideBlob/WideBlob';
 import { useAuth } from '../Providers/AuthProvider';
-import {
-  DadosEvento,
-  DiaDeEvento,
-  EventoApiMock,
-  Turno,
-} from '../api/eventos.api';
+import { DadosEvento, DiaDeEvento, Turno } from '../api/eventos.api';
 import { eventoService } from '../api/firebaseImp/eventos.service';
 
 const EventInfo = () => {
@@ -32,7 +27,8 @@ const EventInfo = () => {
   const [error, setError] = useState(false);
   useEffect(() => {
     setState('loading');
-    EventoApiMock.buscarEventoPorCodigo(eventCode)
+    eventoService
+      .buscarEventoPorCodigo(eventCode)
       .then((res) => {
         setEventData(res);
         setState('success');
@@ -67,6 +63,8 @@ const EventInfo = () => {
 
   // format date to dd/mm/yyyy
   function formatDate(date: Date) {
+    if (!date) return;
+
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
@@ -101,7 +99,12 @@ const EventInfo = () => {
             <SimpleText value={`${eventData?.description}`}></SimpleText>
             <SimpleText value={`${eventData?.local}`}></SimpleText>
             <SimpleText
-              value={`${eventData?.voluntarios.join(', ')}`}></SimpleText>
+              value={
+                eventData?.voluntarios?.length &&
+                eventData?.voluntarios?.length > 0
+                  ? `${eventData?.voluntarios?.map((v) => v.nome).join(', ')}`
+                  : 'Seja a primeira a se voluntariar!'
+              }></SimpleText>
           </Flex>
 
           {/* {isUserInscrito(eventData, currentUser) ? (

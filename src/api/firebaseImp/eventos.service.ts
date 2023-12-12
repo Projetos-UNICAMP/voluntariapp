@@ -12,6 +12,16 @@ import { handleErrorWithLogging } from '../errorHandler';
 import { db } from '../../config/firebase';
 import { InformacoesUsuario } from '../usuarios.api';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function convertDiasFromFB(dia: any){
+  const diaConvertido: DiaDeEvento = {
+    ...dia,
+    data: dia.data.toDate()
+  }
+
+  return diaConvertido;
+}
+
 class EventoService implements IEventoApi {
   private readonly collectionName = eventosRoute;
   
@@ -54,14 +64,16 @@ class EventoService implements IEventoApi {
   async criarNovoEvento(payload: PayloadNovoEvento): Promise<RespostaNovoEvento> {
     try {
       // Generate days between dataInicio and dataFim
+      const {dataInicio, dataFim, numTurnosPorDia, ...rest} = payload;
+
       const diasDeEvento: DiaDeEvento[] = [];
-      const currentDate = new Date(payload.dataInicio);
+      const currentDate = new Date(dataInicio);
   
-      while (currentDate <= payload.dataFim) {
+      while (currentDate <= dataFim) {
         // Create turnos for the day
         const turnos: Turno[] = [];
   
-        for (let i = 1; i <= payload.numTurnosPorDia; i++) {
+        for (let i = 1; i <= numTurnosPorDia; i++) {
           turnos.push({
             voluntarios: [],
             title: `Turno ${i}`,
@@ -80,8 +92,9 @@ class EventoService implements IEventoApi {
   
       // Add to Firestore
       const docRef = await addDoc(collection(db, this.collectionName), {
-        ...payload,
+        ...rest,
         dias: diasDeEvento,
+        voluntarios: [],
       });
   
       return {
@@ -95,24 +108,25 @@ class EventoService implements IEventoApi {
   }
 
   async adicionarVoluntarioEvento(voluntario: InformacoesUsuario, evento: DadosEvento): Promise<DadosEvento> {
-    const eventoRef = doc(db, 'test-event', evento.codigoEvento);
+    const eventoRef = doc(db, this.collectionName, evento.codigoEvento);
   
     try {
       // Fetch the event document
       const eventoSnap = await getDoc(eventoRef);
       if (eventoSnap.exists()) {
         const eventoData = eventoSnap.data() as DadosEvento;
+        const dadosEvento = { ...eventoData, codigoEvento: eventoSnap.id, dias: eventoData?.dias?.map(convertDiasFromFB)} as DadosEvento;
   
         // Check if the voluntario is already in the array
-        if (!eventoData.voluntarios.some(v => v.email === voluntario.email)) {
-          eventoData.voluntarios.push(voluntario);
+        if (!dadosEvento.voluntarios.some(v => v.email === voluntario.email)) {
+          dadosEvento.voluntarios.push(voluntario);
           
           // Update the document
-          await updateDoc(eventoRef, { voluntarios: eventoData.voluntarios });
+          await updateDoc(eventoRef, { voluntarios: dadosEvento.voluntarios });
         }
   
         // Return the updated (or unchanged) event data
-        return eventoData;
+        return dadosEvento;
       } else {
         throw new Error('Evento not found');
       }
@@ -127,7 +141,11 @@ class EventoService implements IEventoApi {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      return docSnap.data() as DadosEvento;
+      const fbData = docSnap.data();
+
+      const dadosEvento = { ...fbData, codigoEvento: docSnap.id, dias: fbData?.dias?.map(convertDiasFromFB)} as DadosEvento;
+
+      return dadosEvento;
     } else {
       throw new Error(`No event found with code: ${codigo}`);
     }

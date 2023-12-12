@@ -6,8 +6,8 @@ export type PayloadNovoEvento = {
   local: string;
   nomeResponsavel: string;
   telefoneResponsavel: string;
-  dataInicio: Date | null;
-  dataFim: Date | null;
+  dataInicio: Date;
+  dataFim: Date;
   numTurnosPorDia: number;
 };
 
