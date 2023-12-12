@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import { eventoService } from './eventos.service';
 // import { db } from '../../config/firebase';
-import { Timestamp, addDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { DadosEvento } from '../eventos.api';
 import { Cargo } from '../usuarios.api';
 
