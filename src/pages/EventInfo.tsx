@@ -1,5 +1,5 @@
-import { Center, Flex, Spacer } from '@chakra-ui/react';
-import { Fragment, useEffect, useState } from 'react';
+import { Flex, Spacer } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import BackButton from '../Components/BackButton/BackButton';
 import LoadingSpinner from '../Components/LoadingSpinner/LoadingSpinner';
@@ -8,13 +8,15 @@ import TitleText from '../Components/TitleText/TitleText';
 import TopMenu from '../Components/TopMenu/TopMenu';
 import WideBlob from '../Components/WideBlob/WideBlob';
 import { DadosEvento, EventoApiMock } from '../api/eventos.api';
-import { eventoService } from '../api/firebaseImp/eventos.service';
+import ShiftCard from '../Components/ShiftCard/ShiftCard';
+import FinalButton, {
+  ButtonStyleOptions,
+} from '../Components/FinalButton/FinalButton';
 
 const EventInfo = () => {
   useEffect(() => {}, []);
   const location = useLocation();
   const eventCode = location.state?.eventCode;
-  console.log(eventCode);
   const [state, setState] = useState('');
   const [eventData, setEventData] = useState<DadosEvento | undefined>(
     undefined
@@ -52,12 +54,21 @@ const EventInfo = () => {
       <Flex flexDir="column" w="100vw" h="100vh">
         <TopMenu mt="2vh"></TopMenu>
         <BackButton route="/"></BackButton>
-        <Flex flexDir="column" align={'start'} ml={'6vw'} mt="1vh">
-          <TitleText value={eventData?.nomeDoEvento}></TitleText>
-          <SimpleText
-            value={`Organização: ${eventData?.nomeResponsavel} ${eventData?.telefoneResponsavel}`}></SimpleText>
-          <SimpleText value={`${eventData?.description}`}></SimpleText>
-          <SimpleText value={`${eventData?.local}`}></SimpleText>
+        <Flex flexDir={'row'} justifyContent={'space-between'} w={'90%'}>
+          <Flex flexDir="column" align={'start'} ml={'6vw'} mt="1vh">
+            <TitleText value={eventData?.nomeDoEvento}></TitleText>
+            <SimpleText
+              value={`Organização: ${eventData?.nomeResponsavel} ${eventData?.telefoneResponsavel}`}></SimpleText>
+            <SimpleText value={`${eventData?.description}`}></SimpleText>
+            <SimpleText value={`${eventData?.local}`}></SimpleText>
+          </Flex>
+
+          <FinalButton
+            label={'Participar do evento'}
+            style={{ type: ButtonStyleOptions.Primary, mt: 4 }}
+            onClick={function (): void {
+              throw new Error('Function not implemented.');
+            }}></FinalButton>
         </Flex>
         <Flex
           flexDir="row"
@@ -66,8 +77,13 @@ const EventInfo = () => {
           paddingTop={'2vh'}>
           {eventData?.dias.map((dia, index) => (
             <Flex flexDir="column" align="center" key={index}>
-              <TitleText value={formatDate(dia.data)} />
-              <TitleText value={getDayOfWeekInPortuguese(dia.data)} />
+              <TitleText size="xl" value={formatDate(dia.data)} />
+              <TitleText size="lg" value={getDayOfWeekInPortuguese(dia.data)} />
+              {dia.turnos.map((turno, index) => (
+                <Flex flexDir="column" align="center" key={index}>
+                  <ShiftCard turno={turno}></ShiftCard>
+                </Flex>
+              ))}
             </Flex>
           ))}
         </Flex>
