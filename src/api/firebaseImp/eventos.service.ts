@@ -1,4 +1,4 @@
-import { doc, getDoc, addDoc, collection, updateDoc  } from 'firebase/firestore';
+import { doc, getDoc, addDoc, collection, updateDoc } from 'firebase/firestore';
 import {
   PayloadNovoEvento,
   RespostaNovoEvento,
@@ -13,45 +13,68 @@ import { db } from '../../config/firebase';
 import { InformacoesUsuario } from '../usuarios.api';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function convertDiasFromFB(dia: any){
+function convertDiasFromFB(dia: any) {
   const diaConvertido: DiaDeEvento = {
     ...dia,
-    data: dia.data.toDate()
-  }
+    data: dia.data.toDate(),
+  };
 
   return diaConvertido;
 }
 
 class EventoService implements IEventoApi {
   private readonly collectionName = eventosRoute;
-  
-  async adicionarVoluntarioTurno(voluntario: InformacoesUsuario, evento: DadosEvento, diaEvento: DiaDeEvento, turno: Turno): Promise<DadosEvento> {
-    const eventoRef = doc(db, 'test-event', evento.codigoEvento);
-  
+
+  async adicionarVoluntarioTurno(
+    voluntario: InformacoesUsuario,
+    evento: DadosEvento,
+    diaEvento: DiaDeEvento,
+    turno: Turno
+  ): Promise<DadosEvento> {
+    const eventoRef = doc(db, this.collectionName, evento.codigoEvento);
+
     try {
       // Fetch the event document
       const eventoSnap = await getDoc(eventoRef);
+
       if (eventoSnap.exists()) {
         const eventoData = eventoSnap.data() as DadosEvento;
-  
+
+        const dadosEvento = {
+          ...eventoData,
+          codigoEvento: eventoSnap.id,
+          dias: eventoData?.dias?.map(convertDiasFromFB),
+        } as DadosEvento;
+
         // Find the diaDeEvento and turno
-        const diaIndex = eventoData.dias.findIndex(dia => dia.data === diaEvento.data);
-        const turnoIndex = eventoData.dias[diaIndex]?.turnos.findIndex(t => t.title === turno.title);
-  
+        const diaIndex = dadosEvento.dias.findIndex(
+          (dia) => dia.data.getTime() === diaEvento.data.getTime()
+        );
+
+        const turnoIndex = dadosEvento.dias[diaIndex]?.turnos.findIndex(
+          (t) => t.title === turno.title
+        );
+
         if (diaIndex !== -1 && turnoIndex !== -1) {
           // Check if the voluntario is already in the array
-          if (!eventoData.dias[diaIndex].turnos[turnoIndex].voluntarios.some(v => v.email === voluntario.email)) {
-            eventoData.dias[diaIndex].turnos[turnoIndex].voluntarios.push(voluntario);
-            
+          if (
+            !dadosEvento.dias[diaIndex].turnos[turnoIndex].voluntarios.some(
+              (v) => v.email === voluntario.email
+            )
+          ) {
+            dadosEvento.dias[diaIndex].turnos[turnoIndex].voluntarios.push(
+              voluntario
+            );
+
             // Update the document
-            await updateDoc(eventoRef, { dias: eventoData.dias });
+            await updateDoc(eventoRef, { dias: dadosEvento.dias });
           }
         } else {
           throw new Error('Invalid diaDeEvento or turno');
         }
-  
+
         // Return the updated (or unchanged) event data
-        return eventoData;
+        return dadosEvento;
       } else {
         throw new Error('Evento not found');
       }
@@ -61,42 +84,44 @@ class EventoService implements IEventoApi {
     }
   }
 
-  async criarNovoEvento(payload: PayloadNovoEvento): Promise<RespostaNovoEvento> {
+  async criarNovoEvento(
+    payload: PayloadNovoEvento
+  ): Promise<RespostaNovoEvento> {
     try {
       // Generate days between dataInicio and dataFim
-      const {dataInicio, dataFim, numTurnosPorDia, ...rest} = payload;
+      const { dataInicio, dataFim, numTurnosPorDia, ...rest } = payload;
 
       const diasDeEvento: DiaDeEvento[] = [];
       const currentDate = new Date(dataInicio);
-  
+
       while (currentDate <= dataFim) {
         // Create turnos for the day
         const turnos: Turno[] = [];
-  
+
         for (let i = 1; i <= numTurnosPorDia; i++) {
           turnos.push({
             voluntarios: [],
             title: `Turno ${i}`,
           });
         }
-  
+
         // Create DiaDeEvento
         diasDeEvento.push({
           turnos: turnos,
           data: new Date(currentDate),
         });
-  
+
         // Move to the next day
         currentDate.setDate(currentDate.getDate() + 1);
       }
-  
+
       // Add to Firestore
       const docRef = await addDoc(collection(db, this.collectionName), {
         ...rest,
         dias: diasDeEvento,
         voluntarios: [],
       });
-  
+
       return {
         sucesso: true,
         codigoEvento: docRef.id,
@@ -107,24 +132,33 @@ class EventoService implements IEventoApi {
     }
   }
 
-  async adicionarVoluntarioEvento(voluntario: InformacoesUsuario, evento: DadosEvento): Promise<DadosEvento> {
+  async adicionarVoluntarioEvento(
+    voluntario: InformacoesUsuario,
+    evento: DadosEvento
+  ): Promise<DadosEvento> {
     const eventoRef = doc(db, this.collectionName, evento.codigoEvento);
-  
+
     try {
       // Fetch the event document
       const eventoSnap = await getDoc(eventoRef);
       if (eventoSnap.exists()) {
         const eventoData = eventoSnap.data() as DadosEvento;
-        const dadosEvento = { ...eventoData, codigoEvento: eventoSnap.id, dias: eventoData?.dias?.map(convertDiasFromFB)} as DadosEvento;
-  
+        const dadosEvento = {
+          ...eventoData,
+          codigoEvento: eventoSnap.id,
+          dias: eventoData?.dias?.map(convertDiasFromFB),
+        } as DadosEvento;
+
         // Check if the voluntario is already in the array
-        if (!dadosEvento.voluntarios.some(v => v.email === voluntario.email)) {
+        if (
+          !dadosEvento.voluntarios.some((v) => v.email === voluntario.email)
+        ) {
           dadosEvento.voluntarios.push(voluntario);
-          
+
           // Update the document
           await updateDoc(eventoRef, { voluntarios: dadosEvento.voluntarios });
         }
-  
+
         // Return the updated (or unchanged) event data
         return dadosEvento;
       } else {
@@ -143,7 +177,11 @@ class EventoService implements IEventoApi {
     if (docSnap.exists()) {
       const fbData = docSnap.data();
 
-      const dadosEvento = { ...fbData, codigoEvento: docSnap.id, dias: fbData?.dias?.map(convertDiasFromFB)} as DadosEvento;
+      const dadosEvento = {
+        ...fbData,
+        codigoEvento: docSnap.id,
+        dias: fbData?.dias?.map(convertDiasFromFB),
+      } as DadosEvento;
 
       return dadosEvento;
     } else {

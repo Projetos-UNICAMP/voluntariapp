@@ -14,6 +14,7 @@ import WideBlob from '../Components/WideBlob/WideBlob';
 import { useAuth } from '../Providers/AuthProvider';
 import { DadosEvento, DiaDeEvento, Turno } from '../api/eventos.api';
 import { eventoService } from '../api/firebaseImp/eventos.service';
+import { InformacoesUsuario } from '../api/usuarios.api';
 
 const EventInfo = () => {
   const { currentUser } = useAuth();
@@ -77,14 +78,15 @@ const EventInfo = () => {
     return dayWithoutFeira.charAt(0).toUpperCase() + dayWithoutFeira.slice(1);
   }
 
-  // function isUserInscrito(
-  //   eventData?: DadosEvento,
-  //   user: InformacoesUsuario | null
-  // ) {
-  //   if (!eventData || !user) return false;
-
-  //   return eventData.voluntarios.includes(user);
-  // }
+  function isUserInscrito(
+    user: InformacoesUsuario | null,
+    eventData?: DadosEvento
+  ) {
+    if (!eventData || !user) return false;
+    return eventData.voluntarios.some((voluntario) => {
+      return voluntario.email === user.email;
+    });
+  }
 
   if (state == 'success')
     return (
@@ -107,20 +109,24 @@ const EventInfo = () => {
               }></SimpleText>
           </Flex>
 
-          {/* {isUserInscrito(eventData, currentUser) ? (
+          {isUserInscrito(currentUser, eventData) ? (
             <SimpleText value="Inscrito no evento"></SimpleText>
-          ) : ( */}
-          <FinalButton
-            label={'Participar do evento'}
-            style={{ type: ButtonStyleOptions.Primary, mt: 4 }}
-            onClick={handleInscreverEvento}></FinalButton>
-          {/* )} */}
+          ) : currentUser ? (
+            <FinalButton
+              label={'Participar do evento'}
+              style={{ type: ButtonStyleOptions.Primary, mt: 4 }}
+              onClick={handleInscreverEvento}></FinalButton>
+          ) : (
+            <></>
+          )}
         </Flex>
         <Flex
           flexDir="row"
           align="center"
+          alignSelf={'center'}
           justifyContent="space-around"
-          paddingTop={'2vh'}>
+          w="90vw"
+          mt={10}>
           {eventData?.dias.map((dia, index) => (
             <Flex flexDir="column" align="center" key={index}>
               <TitleText size="xl" value={formatDate(dia.data)} />
@@ -130,14 +136,14 @@ const EventInfo = () => {
                   <ShiftCard
                     turno={turno}
                     dia={dia}
+                    isUserInscrito={isUserInscrito(currentUser, eventData)}
                     handleInscrever={handleInscreverTurno}></ShiftCard>
                 </Flex>
               ))}
             </Flex>
           ))}
         </Flex>
-        <Spacer></Spacer>
-        <WideBlob></WideBlob>
+        {/* <WideBlob></WideBlob> */}
       </Flex>
     );
   if (state == 'loading')

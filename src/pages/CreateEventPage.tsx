@@ -170,6 +170,7 @@ const CreateEventPage = () => {
                       `Evento criado com sucesso! Forneça o código: ${res.codigoEvento}`
                     );
                   })
+                  .then(() => navigate('/'))
                   .catch((err) => {
                     console.log(err);
                   });
