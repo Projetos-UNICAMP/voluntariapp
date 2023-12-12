@@ -27,7 +27,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const [eventCode, setEventCode] = useState<string>('');
   return (
-    <RightImageLayoutComponent imageUrl={'src/assets/pens.png'}>
+    <RightImageLayoutComponent imageUrl={'/assets/pens.png'}>
       <TopMenu position="absolute" top="2vh"></TopMenu>
       <Flex flexDir={'column'} verticalAlign={'middle'}>
         <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>

@@ -39,7 +39,7 @@ const SignUpPage = () => {
   ];
 
   return (
-    <RightImageLayoutComponent imageUrl={'src/assets/cuted.png'}>
+    <RightImageLayoutComponent imageUrl={'/assets/cuted.png'}>
       <Flex flexDir={'column'} verticalAlign={'middle'} w={'55vw'}>
         <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>
           <TitleText value={'Bora Voluntariar!'}></TitleText>
