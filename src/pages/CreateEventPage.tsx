@@ -1,98 +1,158 @@
-import { Flex } from '@chakra-ui/react';
-import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLayout';
-import TitleText from '../Components/TitleText/TitleText';
-import SimpleText from '../Components/SimpleText/SimpleText';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Box, Button, Flex } from '@chakra-ui/react';
+import { ChevronLeftIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
 import FinalButton, {
   ButtonStyleOptions,
 } from '../Components/FinalButton/FinalButton';
-import { useNavigate } from 'react-router-dom';
 import FinalTextInputField from '../Components/FinalTextInputField/FinalTextInputField';
-import { useState } from 'react';
-import { EventoAPIMock } from '../api/eventos.api';
-import { DadosEvento, PayloadNovoEvento } from '../api/eventos.api';
+import SimpleText from '../Components/SimpleText/SimpleText';
+import TitleText from '../Components/TitleText/TitleText';
+import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLayout';
+import { PayloadNovoEvento } from '../api/eventos.api';
+import { eventoService } from '../api/firebaseImp/eventos.service';
+import DateRangePicker from '../Components/DateRangePicker/DateRangePicker';
+import { useNavigate } from 'react-router-dom';
 
 const CreateEventPage = () => {
   const navigate = useNavigate();
-  let eventData: DadosEvento = {
-    nomeDoEvento: '',
-    description: '',
-    local: '',
-    nomeResponsavel: '',
-    telefoneResponsavel: '',
-  };
+  const [currentPage, setCurrentPage] = useState(0);
+
   const [dadosEvento, setDadosEvento] = useState<PayloadNovoEvento>({
     nomeDoEvento: '',
     description: '',
     local: '',
     nomeResponsavel: '',
     telefoneResponsavel: '',
+    numTurnosPorDia: 0,
+    dataInicio: new Date(),
+    dataFim: new Date(),
   });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDadosEvento({ ...dadosEvento, [event.target.name]: event.target.value });
+  };
+
   return (
-    <RightImageLayoutComponent imageUrl={'src/assets/discs.png'}>
+    <RightImageLayoutComponent
+      imageUrl={
+        currentPage == 0 ? 'src/assets/discs.png' : 'src/assets/clock.png'
+      }>
       <Flex flexDir={'column'} verticalAlign={'middle'} w={'55vw'}>
         <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>
-          <TitleText value={'Bora lá!'}></TitleText>
+          <Button
+            onClick={() => {
+              if (currentPage == 0) {
+                navigate('/');
+              } else {
+                setCurrentPage(0);
+              }
+            }}
+            variant="outline"
+            size="sm"
+            width="100px"
+            colorScheme="green"
+            mb={4}
+            leftIcon={<ChevronLeftIcon />}>
+            Voltar
+          </Button>
+          <TitleText
+            value={
+              currentPage == 0 ? 'Bora lá!' : 'Quando vai ser?'
+            }></TitleText>
           <SimpleText
-            value={'Primeiro algumas infos sobre o evento:'}></SimpleText>
-          <FinalTextInputField
-            placeholder="Nome do evento"
-            onChange={function (e) {
-              console.log(e);
-              eventData = { ...dadosEvento };
-              eventData.nomeDoEvento = e.target.value;
-              setDadosEvento({ ...eventData });
-              console.log(dadosEvento);
-            }}
-            value={''}
-            name={''}></FinalTextInputField>
-          <FinalTextInputField
-            placeholder="Descrição"
-            onChange={function (e) {
-              console.log(e);
-              eventData = { ...dadosEvento };
-              eventData.description = e.target.value;
-              setDadosEvento({ ...eventData });
-              console.log(dadosEvento);
-            }}
-            value={''}
-            name={''}></FinalTextInputField>
-          <FinalTextInputField
-            placeholder="Local"
-            onChange={function (e) {
-              console.log(e);
-              eventData = { ...dadosEvento };
-              eventData.local = e.target.value;
-              setDadosEvento({ ...eventData });
-              console.log(dadosEvento);
-            }}
-            value={''}
-            name={''}></FinalTextInputField>
+            mt="15px"
+            mb="15px"
+            value={
+              currentPage == 0
+                ? 'Primeiro algumas infos sobre o evento:'
+                : 'Selecione a data do evento:'
+            }></SimpleText>
+
+          {currentPage == 0 && (
+            <>
+              <FinalTextInputField
+                placeholder="Nome do evento"
+                onChange={handleChange}
+                value={dadosEvento.nomeDoEvento}
+                name={'nomeDoEvento'}
+                mb={4}></FinalTextInputField>
+              <FinalTextInputField
+                placeholder="Descrição"
+                onChange={handleChange}
+                value={dadosEvento.description}
+                name={'description'}
+                mb={4}></FinalTextInputField>
+              <FinalTextInputField
+                placeholder="Local"
+                onChange={handleChange}
+                value={dadosEvento.local}
+                name={'local'}
+                mb={4}></FinalTextInputField>
+            </>
+          )}
+
+          {currentPage == 1 && (
+            <>
+              <Box mt={2} mb={3}>
+                <DateRangePicker
+                  onDateChange={(dates) => {
+                    const [start, end] = dates;
+
+                    if (!start || !end) return;
+
+                    setDadosEvento({
+                      ...dadosEvento,
+                      dataInicio: start,
+                      dataFim: end,
+                    });
+                  }}
+                />
+              </Box>
+            </>
+          )}
+
           <SimpleText
-            value={'E agora sobre o responsável pelo evento:'}></SimpleText>
-          <FinalTextInputField
-            placeholder="Nome do responsável"
-            onChange={function (e) {
-              console.log(e);
-              eventData = { ...dadosEvento };
-              eventData.nomeResponsavel = e.target.value;
-              setDadosEvento({ ...eventData });
-              console.log(dadosEvento);
-            }}
-            value={''}
-            name={''}></FinalTextInputField>
-          <FinalTextInputField
-            placeholder="Telefone"
-            onChange={function (e) {
-              console.log(e);
-              eventData = { ...dadosEvento };
-              eventData.telefoneResponsavel = e.target.value;
-              setDadosEvento({ ...eventData });
-              console.log(dadosEvento);
-            }}
-            value={''}
-            name={''}></FinalTextInputField>
+            mb="15px"
+            value={
+              currentPage == 0
+                ? 'E agora sobre o responsável pelo evento:'
+                : 'Qual é o número de turnos por dia?'
+            }></SimpleText>
+
+          {currentPage == 0 && (
+            <>
+              <FinalTextInputField
+                placeholder="Nome do responsável"
+                onChange={handleChange}
+                value={dadosEvento.nomeResponsavel}
+                name={'nomeResponsavel'}
+                mb={4}></FinalTextInputField>
+
+              <FinalTextInputField
+                placeholder="Telefone"
+                onChange={handleChange}
+                value={dadosEvento.telefoneResponsavel}
+                name={'telefoneResponsavel'}
+                mb={4}></FinalTextInputField>
+            </>
+          )}
+
+          {currentPage == 1 && (
+            <>
+              <FinalTextInputField
+                placeholder="Número de turnos"
+                onChange={handleChange}
+                value={dadosEvento.numTurnosPorDia.toString()}
+                name={'numTurnosPorDia'}
+                mb={4}></FinalTextInputField>
+            </>
+          )}
+
           <FinalButton
-            label={'criar evento'}
+            label={
+              currentPage == 0 ? 'prosseguir para as datas' : 'criar evento'
+            }
             style={{
               type: ButtonStyleOptions.Primary,
               width: '33vw',
@@ -100,15 +160,21 @@ const CreateEventPage = () => {
               mb: 4,
             }}
             onClick={() => {
-              EventoAPIMock.criarNovoEvento(dadosEvento)
-                .then((res) => {
-                  console.log(res.codigoEvento);
-                  console.log(res.sucesso);
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-              navigate('/criar-evento', { state: { dadosEvento } });
+              if (currentPage == 0) {
+                setCurrentPage(1);
+              } else {
+                eventoService
+                  .criarNovoEvento(dadosEvento)
+                  .then((res) => {
+                    alert(
+                      `Evento criado com sucesso! Forneça o código: ${res.codigoEvento}`
+                    );
+                  })
+                  .then(() => navigate('/'))
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
             }}></FinalButton>
         </Flex>
       </Flex>

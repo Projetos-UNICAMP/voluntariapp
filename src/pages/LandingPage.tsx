@@ -32,7 +32,7 @@ const LandingPage = () => {
       <Flex flexDir={'column'} verticalAlign={'middle'}>
         <Flex flexDir={'column'} w={'60%'} alignSelf={'center'}>
           <AppLogo size={LogoSize.Large}></AppLogo>
-          <TitleText value={'Conectando'} mt={10}></TitleText>
+          <TitleText value={'Conectando'}></TitleText>
           <TitleText value="voluntários e causas"></TitleText>
           <TitleText value="para transformar vidas."></TitleText>
           <Flex flexDir={'column'} alignSelf={'center'} mt={6}>

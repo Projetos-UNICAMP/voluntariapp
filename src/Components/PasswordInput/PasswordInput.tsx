@@ -1,23 +1,18 @@
-// FinalTextInputField.tsx
 import React from 'react';
 import { Input } from '@chakra-ui/react';
 
-export interface FinalTextInputFieldProps {
+export interface PasswordInputProps {
   value: string;
   onChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   name: string;
-  mb?: number;
-  mt?: number;
 }
 
-const FinalTextInputField: React.FC<FinalTextInputFieldProps> = ({
+const PasswordInput: React.FC<PasswordInputProps> = ({
   value,
   onChange,
   placeholder,
   name,
-  mb,
-  mt,
 }) => {
   return (
     <Input
@@ -25,10 +20,9 @@ const FinalTextInputField: React.FC<FinalTextInputFieldProps> = ({
       value={value}
       onChange={(e) => onChange(e)}
       placeholder={placeholder}
-      mb={mb}
-      mt={mt}
+      type='password'
     />
   );
 };
 
-export default FinalTextInputField;
+export default PasswordInput;

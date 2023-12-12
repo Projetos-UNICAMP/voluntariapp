@@ -3,6 +3,7 @@ import LandingPage from '../pages/LandingPage';
 import SignUpPage from '../pages/SignUpPage';
 import EventInfo from '../pages/EventInfo';
 import CreateEventPage from '../pages/CreateEventPage';
+import LoginPage from '../pages/LoginPage';
 
 export const browserRouter = createBrowserRouter([
   {
@@ -15,10 +16,14 @@ export const browserRouter = createBrowserRouter([
   },
   {
     path: '/event-info',
-    element: <EventInfo></EventInfo>
+    element: <EventInfo></EventInfo>,
   },
-{
-   path: '/criar-evento',
+  {
+    path: '/criar-evento',
     element: <CreateEventPage></CreateEventPage>,
+  },
+  {
+    path: '/login',
+    element: <LoginPage></LoginPage>,
   },
 ]);

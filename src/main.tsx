@@ -1,10 +1,10 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import React from 'react';
-import { extendTheme } from '@chakra-ui/react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import { RouterProvider } from 'react-router-dom';
+import './index.css';
 import { browserRouter } from './routes/routes.tsx';
+import { AuthProvider } from './Providers/AuthProvider.tsx';
 
 const colors = {
   teal: {
@@ -38,7 +38,9 @@ const theme = extendTheme({ colors });
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <RouterProvider router={browserRouter} />
+      <AuthProvider>
+        <RouterProvider router={browserRouter} />
+      </AuthProvider>
     </ChakraProvider>
   </React.StrictMode>
 );

@@ -1,21 +1,31 @@
 // TitleText.tsx
 import React from 'react';
-import { Text as ChakraText, StyleProps } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 
-export interface TitleTextProps extends StyleProps {
-  value: string;
+export interface TitleTextProps {
+  value: string | undefined;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+  weight?: 'normal' | 'bold' | 'extrabold' | 'black' | 'semibold' | 'light';
+  mt?: number;
+  mb?: number;
 }
 
-const TitleText: React.FC<TitleTextProps> = ({ value, ...styleProps }) => {
+const TitleText: React.FC<TitleTextProps> = ({
+  value,
+  size,
+  weight,
+  mt,
+  mb,
+}) => {
   return (
-    <ChakraText
-      className="main-title"
-      fontSize="6xl"
-      fontWeight="black"
+    <Text
+      fontSize={size || '3xl'}
+      fontWeight={weight || 'bold'}
       lineHeight={1}
-      {...styleProps}>
+      mt={mt}
+      mb={mb}>
       {value}
-    </ChakraText>
+    </Text>
   );
 };
 

@@ -1,14 +1,16 @@
 // TopMenu.tsx
 import React from 'react';
-import { Flex, StyleProps } from '@chakra-ui/react';
+import { Flex, StyleProps, Text } from '@chakra-ui/react';
 import AppLogo, { LogoSize } from '../AppLogo/AppLogo';
-import SimpleText from '../SimpleText/SimpleText';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Providers/AuthProvider';
 
 export interface TopMenuProps extends StyleProps {}
 
 const TopMenu: React.FC<TopMenuProps> = ({ ...styleProps }) => {
   const navigate = useNavigate();
+  const { currentUser, logout } = useAuth();
+
   return (
     <Flex flexDir={'row'} textAlign="center" {...styleProps}>
       <Flex
@@ -18,20 +20,34 @@ const TopMenu: React.FC<TopMenuProps> = ({ ...styleProps }) => {
         style={{ cursor: 'pointer' }}>
         <AppLogo size={LogoSize.Small}></AppLogo>
       </Flex>
+      {currentUser && (
+        <Flex mr="1vw" style={{ cursor: 'pointer' }}>
+          <Text fontWeight="bold" fontSize="20" onClick={() => navigate('/')}>
+            {`Olá, ${currentUser?.nome}`}
+          </Text>
+        </Flex>
+      )}
       <Flex mr="1vw" style={{ cursor: 'pointer' }}>
-        <SimpleText
-          value={'Página Inicial'}
-          fontWeight="bold"
-          fontSize="1vw"
-          onClick={() => navigate('/paginal-inicial')}></SimpleText>
+        <Text fontWeight="bold" fontSize="20" onClick={() => navigate('/')}>
+          Página Inicial
+        </Text>
       </Flex>
-      <Flex mr="1vw" style={{ cursor: 'pointer' }}>
-        <SimpleText
-          value={'Login'}
-          fontWeight="bold"
-          fontSize="1vw"
-          onClick={() => navigate('/cadastro')}></SimpleText>
-      </Flex>
+      {!currentUser ? (
+        <Flex mr="1vw" style={{ cursor: 'pointer' }}>
+          <Text
+            fontWeight="bold"
+            fontSize="20"
+            onClick={() => navigate('/login')}>
+            Login
+          </Text>
+        </Flex>
+      ) : (
+        <Flex mr="1vw" style={{ cursor: 'pointer' }}>
+          <Text fontWeight="bold" fontSize="1vw" onClick={() => logout()}>
+            Logout
+          </Text>
+        </Flex>
+      )}
     </Flex>
   );
 };
