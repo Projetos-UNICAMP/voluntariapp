@@ -11,7 +11,6 @@ import TitleText from '../Components/TitleText/TitleText';
 import RightImageLayoutComponent from '../Layouts/RigthImageLayout/RigthImageLayout';
 import { PayloadNovoEvento } from '../api/eventos.api';
 import { eventoService } from '../api/firebaseImp/eventos.service';
-import { set } from 'firebase/database';
 import DateRangePicker from '../Components/DateRangePicker/DateRangePicker';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,8 +25,8 @@ const CreateEventPage = () => {
     nomeResponsavel: '',
     telefoneResponsavel: '',
     numTurnosPorDia: 0,
-    dataInicio: null,
-    dataFim: null,
+    dataInicio: new Date(),
+    dataFim: new Date(),
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,6 +98,9 @@ const CreateEventPage = () => {
                 <DateRangePicker
                   onDateChange={(dates) => {
                     const [start, end] = dates;
+
+                    if (!start || !end) return;
+
                     setDadosEvento({
                       ...dadosEvento,
                       dataInicio: start,
@@ -168,6 +170,7 @@ const CreateEventPage = () => {
                       `Evento criado com sucesso! Forneça o código: ${res.codigoEvento}`
                     );
                   })
+                  .then(() => navigate('/'))
                   .catch((err) => {
                     console.log(err);
                   });

@@ -15,12 +15,14 @@ export type Props = {
   label: string;
   style: ButtonStyleProps;
   onClick: () => void;
+  disabled?: boolean;
 };
 
 export default function FinalButton({
   label,
   style = { type: ButtonStyleOptions.Primary },
   onClick,
+  disabled,
 }: Props) {
   const primaryProps: ButtonProps = {
     colorScheme: 'teal',
@@ -38,7 +40,11 @@ export default function FinalButton({
 
   return (
     <div>
-      <Button {...buttonProps} {...buttonStyle} onClick={onClick}>
+      <Button
+        {...buttonProps}
+        {...buttonStyle}
+        disabled={disabled}
+        onClick={onClick}>
         {label}
       </Button>
     </div>
