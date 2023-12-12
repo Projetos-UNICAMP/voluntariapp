@@ -7,6 +7,8 @@ export interface FinalTextInputFieldProps {
   onChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   name: string;
+  mb?: number;
+  mt?: number;
 }
 
 const FinalTextInputField: React.FC<FinalTextInputFieldProps> = ({
@@ -14,6 +16,8 @@ const FinalTextInputField: React.FC<FinalTextInputFieldProps> = ({
   onChange,
   placeholder,
   name,
+  mb,
+  mt,
 }) => {
   return (
     <Input
@@ -21,6 +25,8 @@ const FinalTextInputField: React.FC<FinalTextInputFieldProps> = ({
       value={value}
       onChange={(e) => onChange(e)}
       placeholder={placeholder}
+      mb={mb}
+      mt={mt}
     />
   );
 };
