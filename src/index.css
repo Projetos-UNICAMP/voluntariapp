@@ -55,6 +55,47 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* DatePickerStyles.css */
+.react-datepicker,
+.react-datepicker__month-container {
+  width: 100%; /* Makes the date picker 2.5 times wider */
+
+  .react-datepicker__month {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .react-datepicker__week {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+  .react-datepicker__day,
+  .react-datepicker__day-name {
+    width: calc(80% / 7); /* Divide by 7 for the number of days in the week */
+    display: inline-block;
+    margin: 0.5rem; /* Adjust as needed for spacing */
+    text-align: center;
+  }
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-range,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--keyboard-selected {
+  background-color: #aee2d6 !important; /* Sets the selected dates to light #97D0C3 */
+}
+
+/* This is for the range between the selected start and end dates */
+.react-datepicker__day--in-range {
+  background-color: #aee2d6 !important; /* Light #97D0C3 background */
+  color: black !important; /* Change the text color if needed */
+}
+
+/* This is for the actual start and end dates in the range */
+.react-datepicker__day--selected {
+  border: 2px solid #97d0c3 !important; /* More contrast for the border */
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
