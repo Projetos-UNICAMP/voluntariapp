@@ -33,14 +33,14 @@ describe('EventoService', () => {
         telefoneResponsavel: '',
         dias: [],
         codigoEvento: '',
-        voluntarios: []
+        voluntarios: [],
       };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockAddDoc.mockImplementation((collectionRef, data: DadosEvento) => {
+      mockAddDoc.mockImplementation((data: DadosEvento) => {
         savedEventData = data; // Save the data passed to addDoc for validation
         return Promise.resolve({ id: 'abc123' });
       });
-    
+
       const payload = {
         nomeDoEvento: 'Evento teste',
         description: 'evento realizado com fins de teste',
@@ -49,17 +49,17 @@ describe('EventoService', () => {
         telefoneResponsavel: '9987-0987',
         dataInicio: new Date('2023-01-01'),
         dataFim: new Date('2023-01-03'),
-        numTurnosPorDia: 2
+        numTurnosPorDia: 2,
       };
       const result = await eventoService.criarNovoEvento(payload);
-    
+
       expect(addDoc).toHaveBeenCalled();
       expect(result).toEqual({ sucesso: true, codigoEvento: 'abc123' });
-    
+
       // Validate the structure of the data sent to Firestore
       expect(savedEventData).not.toBeNull();
       expect(savedEventData?.dias).toHaveLength(3); // 3 days from Jan 1 to Jan 3
-    
+
       savedEventData.dias.forEach((dia) => {
         expect(dia.turnos).toHaveLength(payload.numTurnosPorDia);
         dia.turnos.forEach((turno, turnoIndex) => {
@@ -68,7 +68,6 @@ describe('EventoService', () => {
         });
       });
     });
-    
 
     it('handles errors when creating a new event', async () => {
       // Mock the addDoc to reject with an error
@@ -83,7 +82,7 @@ describe('EventoService', () => {
         telefoneResponsavel: '9987-0987',
         dataInicio: new Date('2023-01-01'),
         dataFim: new Date('2023-01-03'),
-        numTurnosPorDia: 2
+        numTurnosPorDia: 2,
       };
 
       await expect(eventoService.criarNovoEvento(payload)).rejects.toThrow(
@@ -103,33 +102,38 @@ describe('EventoService', () => {
         telefoneResponsavel: '123-456-7890',
         voluntarios: [],
         dias: [],
-        codigoEvento: 'abc123'
+        codigoEvento: 'abc123',
       };
-    
+
       // Set up mocks
       const mockGetDoc = getDoc as unknown as Mock;
       const mockUpdateDoc = updateDoc as unknown as Mock;
-    
-      mockGetDoc.mockImplementation(() => Promise.resolve({ exists: () => true, data: () => mockEvento }));
+
+      mockGetDoc.mockImplementation(() =>
+        Promise.resolve({ exists: () => true, data: () => mockEvento })
+      );
       mockUpdateDoc.mockImplementation(() => Promise.resolve());
-    
+
       // Volunteer to add
       const voluntario = {
         email: 'voluntario@example.com',
         nome: 'Voluntario',
         telefone: '987-654-3210',
-        cargo: Cargo.VOLUNTARIO
+        cargo: Cargo.VOLUNTARIO,
       };
-    
+
       // Call the function
-      const updatedEvento = await eventoService.adicionarVoluntarioEvento(voluntario, mockEvento);
-    
+      const updatedEvento = await eventoService.adicionarVoluntarioEvento(
+        voluntario,
+        mockEvento
+      );
+
       expect(mockGetDoc).toHaveBeenCalled();
       expect(mockUpdateDoc).toHaveBeenCalled();
       expect(updatedEvento.voluntarios).toContain(voluntario);
       // Additional assertions can be made here
     });
-  })
+  });
 
   describe('adicionarVoluntarioTurno', () => {
     it('adds a volunteer to a specific turno successfully', async () => {
@@ -139,8 +143,8 @@ describe('EventoService', () => {
         data: dataMock,
         turnos: [
           { title: 'Turno 1', voluntarios: [] },
-          { title: 'Turno 2', voluntarios: [] }
-        ]
+          { title: 'Turno 2', voluntarios: [] },
+        ],
       };
 
       const mockEvento = {
@@ -151,38 +155,43 @@ describe('EventoService', () => {
         nomeResponsavel: 'Mock Responsavel',
         telefoneResponsavel: '123-456-7890',
         voluntarios: [],
-        dias: [
-          diaMock
-        ]
+        dias: [diaMock],
       };
-    
+
       // Set up mocks
       const mockGetDoc = getDoc as unknown as Mock;
       const mockUpdateDoc = updateDoc as unknown as Mock;
-    
-      mockGetDoc.mockImplementation(() => Promise.resolve({ exists: () => true, data: () => mockEvento }));
+
+      mockGetDoc.mockImplementation(() =>
+        Promise.resolve({ exists: () => true, data: () => mockEvento })
+      );
       mockUpdateDoc.mockImplementation(() => Promise.resolve());
-    
+
       // Volunteer to add
       const voluntario = {
         email: 'voluntario@example.com',
         nome: 'Voluntario',
         telefone: '987-654-3210',
-        cargo: Cargo.VOLUNTARIO
+        cargo: Cargo.VOLUNTARIO,
       };
-    
+
       const diaEvento = diaMock;
       const turno = { title: 'Turno 1', voluntarios: [] };
-    
+
       // Call the function
-      const updatedEvento = await eventoService.adicionarVoluntarioTurno(voluntario, mockEvento, diaEvento, turno);
-    
+      const updatedEvento = await eventoService.adicionarVoluntarioTurno(
+        voluntario,
+        mockEvento,
+        diaEvento,
+        turno
+      );
+
       expect(mockGetDoc).toHaveBeenCalled();
       expect(mockUpdateDoc).toHaveBeenCalled();
       expect(updatedEvento.dias[0].turnos[0].voluntarios).toContain(voluntario);
       // Additional assertions can be made here
     });
-  })
+  });
 
   describe('buscarEventoPorCodigo', () => {
     it('fetches an event by code successfully', async () => {
