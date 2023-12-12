@@ -42,6 +42,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       alert(`Usuário ${userData.nome} criado com Sucesso!`);
       await login(userData.email, userData.senha, redirectCallback);
       redirectCallback();
+    } else {
+      alert("Erro ao criar a conta!");
     }
   };
 
